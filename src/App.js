@@ -5,6 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import userContext from "./context/user-context";
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
+import Workouts from "./components/Workout/Workouts";
 
 export default function App() {
 
@@ -18,7 +19,9 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<SignInPage />} />
                         <Route path="/signUp" element={<SignUpPage />} />
-                        <Route path="/home" element={<HomePage />} />
+                        <Route path="/home" element={<HomePage />}>
+                            <Route path="workout" element={<Workouts />} />
+                        </Route>
                     </Routes>
                 </BrowserRouter>
             </userContext.Provider>
