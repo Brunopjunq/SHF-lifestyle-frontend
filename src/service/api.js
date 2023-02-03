@@ -18,4 +18,12 @@ function postSignUp(body) {
     return axios.post(signUpAPI, body);
 };
 
-export {postSignUp};
+function postLogin(body) {
+    const singIn = `${URL_BASE}/auth/`
+    return axios.post(singIn, body)
+};
+
+export {
+    postSignUp,
+    postLogin,
+};
