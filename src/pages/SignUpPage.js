@@ -1,8 +1,85 @@
 import styled from "styled-components";
 import Logo from '../assets/images/Logo.png';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import userContext from "../context/user-context"
+import { postSignUp } from "../service/api";
+import Swal from "sweetalert2";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUpPage() {
+    const { setUserInfos } = useContext(userContext);
+
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+    const [password2, setPassword2] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [inputState, setInputState] = useState(false);
+    
+    const navigate = useNavigate();
+
+    function handleForm(e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        });
+    }
+    
+    function signUpRequest(e) {
+        e.preventDefault();
+        setInputState(true);
+        setLoading(false);
+        
+        if(form.password !== password2) {
+            setForm({
+                name: "",
+                email: "",
+                password: "",
+            });
+            setPassword2("");
+            setInputState(false)
+            setLoading(true)
+            Swal.fire({
+                icon: "error",
+                title: "Ops...",
+                text: "As senhas devem ser iguais!"
+            });
+            return;
+        }
+
+        postSignUp(form)
+        .then((res) => {
+            localStorage.setItem(
+                "shf_lifestyle",
+                JSON.stringify({
+                    id: res.data.id,
+                    name: res.data.name,
+                    token: res.data.token,
+                })
+            );
+            setUserInfos(res.data);
+            navigate("/");
+        })
+        .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Ops...",
+                text: `${error.response}`
+            });
+            setForm({
+                name: "",
+                email: "",
+                password: "",
+            });
+            setPassword2("");
+            setInputState(false);
+            setLoading(true);
+        });
+    }
+
     return (
         <>
             <PageContainer>
@@ -10,24 +87,50 @@ export default function SignUpPage() {
                     <LogoBox>
                         <img src={Logo} alt="Logo" />
                     </LogoBox>
-                    <InputBox>
-                        <input 
+                    <InputBox onSubmit={signUpRequest}>
+                        <input
+                        required 
                         placeholder="nome"
-                        name="nome"
+                        name="name"
+                        type="text"
+                        disabled={inputState}
+                        value={form.name}
+                        onChange={handleForm}
                         ></input>
-                        <input 
+                        <input
+                        required 
                         placeholder="e-mail"
                         name="email"
+                        type="email"
+                        disabled={inputState}
+                        value={form.email}
+                        onChange={handleForm}
                         ></input>
-                        <input 
+                        <input
+                        required 
                         placeholder="senha"
-                        name="senha"
+                        name="password"
+                        type="password"
+                        disabled={inputState}
+                        value={form.password}
+                        onChange={handleForm}
                         ></input>
-                        <input 
+                        <input
+                        required 
                         placeholder="repita a senha"
-                        name="repita a senha"
+                        name="password2"
+                        type="password"
+                        disabled={inputState}
+                        value={password2}
+                        onChange={e => setPassword2(e.target.value)}
                         ></input>
-                        <button>Log In</button>
+                        {loading ? (
+                            <button>Sign Up</button>
+                        ) : (
+                            <button disabled={inputState}>
+                                <ThreeDots color="#FFFFFF" height={20} width={50} />
+                            </button>
+                        )}
                         <LinkBox to="/">
                             Já está inscrito? Faça login
                         </LinkBox>
