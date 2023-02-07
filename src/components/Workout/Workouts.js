@@ -7,7 +7,6 @@ export default function Workouts() {
         <Container>
             <h1>Acompanhe seus treinos</h1>
             <WorkoutBox />
-            <WorkoutBox />
             <AddWorkout>
                 Adicione um novo Treino!
             </AddWorkout>
@@ -41,4 +40,8 @@ const AddWorkout = styled.div`
     color: white;
     font-weight:700;
     cursor: pointer;
+
+    :hover {
+        color: #dfcd81;
+    }
 `

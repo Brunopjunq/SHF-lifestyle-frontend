@@ -41,7 +41,7 @@ export default function SignInPage() {
                 })
             );
             setUserInfos(res.data);
-            navigate("/home");
+            navigate("/home/summary");
         })
         .catch((error) => {
             if(error.response.status === 401) {

@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import Workouts from "../Workout/Workouts";
 import NavigationBar from "./NavigationBar";
 
 export default function DashBoard() {
@@ -28,4 +27,6 @@ const DashboardBox = styled.div`
     background: linear-gradient(to left,#33406a,#303d68); 
     margin-top: 30px;
     border-radius: 50px;
+    box-sizing: border-box;
+    padding-bottom: 20px;
 `

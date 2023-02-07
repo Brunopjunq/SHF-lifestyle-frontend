@@ -6,6 +6,8 @@ import userContext from "./context/user-context";
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
 import Workouts from "./components/Workout/Workouts";
+import Aerobics from "./components/Aerobics/Aerobics";
+import WorkoutIdPage from "./components/Workout/WorkoutIdPage";
 
 export default function App() {
 
@@ -21,6 +23,9 @@ export default function App() {
                         <Route path="/signUp" element={<SignUpPage />} />
                         <Route path="/home" element={<HomePage />}>
                             <Route path="workout" element={<Workouts />} />
+                            <Route path="workout/:id" element={<WorkoutIdPage />} />
+                            <Route path="aerobics" element={<Aerobics />} />
+                            <Route path="summary" element={<Aerobics />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

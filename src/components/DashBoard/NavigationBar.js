@@ -6,8 +6,8 @@ export default function NavigationBar() {
     
     return (
         <NavigationBarBox>
-            <h1 onClick={() => navigate("/home")}>Home</h1>
-            <h1>Exercícios Aeróbicos</h1>
+            <h1 onClick={() => navigate("/home/summary")}>Home</h1>
+            <h1 onClick={() => navigate("/home/aerobics")}>Exercícios Aeróbicos</h1>
             <h1>Alimentação</h1>
             <h1 onClick={() => navigate("/home/workout")}>Musculação</h1>
         </NavigationBarBox>
@@ -29,5 +29,9 @@ const NavigationBarBox = styled.div`
         font-size: 15px;
         color: #dfcd81;
         cursor: pointer;
+
+        :hover {
+            filter: blur(1px);
+        }
     }
 `
