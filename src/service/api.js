@@ -6,8 +6,7 @@ function createHeaders() {
     const auth = JSON.parse(localStorage.getItem("shf_lifestyle"));
     const config = {
         headers: {
-            Authorization: `Bearer ${auth.token}`,
-            userId: auth.id
+            Authorization: `Bearer ${auth.token}`
         },
     };
     return config;
@@ -23,7 +22,19 @@ function postLogin(body) {
     return axios.post(singIn, body)
 };
 
+function getWorkouts() {
+    const getWorkouts = `${URL_BASE}/workout`;
+    return axios.get(getWorkouts, createHeaders());
+};
+
+function postWorkout(body) {
+    const postWorkout = `${URL_BASE}/workout`;
+    return axios.post(postWorkout, body, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
+    getWorkouts,
+    postWorkout
 };
