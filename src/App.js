@@ -3,7 +3,6 @@ import GlobalStyle from "./styles/globalStyles";
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage";
 import userContext from "./context/user-context";
-import workoutsContext from "./context/workouts-context"
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
 import Workouts from "./components/Workout/Workouts";
@@ -14,13 +13,11 @@ import useToken from "./hooks/useToken";
 export default function App() {
 
     const [userInfos, setUserInfos] = useState("");
-    const [workoutInfos, setWorkoutInfos] = useState("");
 
     return (
         <>
             <GlobalStyle />
             <userContext.Provider value={{userInfos, setUserInfos}}>
-            <workoutsContext.Provider value={{workoutInfos, setWorkoutInfos}} >
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<SignInPage />} />
@@ -37,7 +34,6 @@ export default function App() {
                         </Route>
                     </Routes>
                 </BrowserRouter>
-            </workoutsContext.Provider>
             </userContext.Provider>
         </>
     )

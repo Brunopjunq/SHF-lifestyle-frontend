@@ -1,23 +1,26 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import workoutsContext from "../../context/workouts-context";
 import ExerciseBox from "./ExerciseBox";
 import Exit from "../../assets/images/Close.png";
 import { postExercise } from "../../service/api";
 import Swal from "sweetalert2";
 
 export default function WorkoutIdPage() {
-    const {workoutInfos} = useContext(workoutsContext);
     const navigate = useNavigate();
     const { id } = useParams();
-    const workoutId = workoutInfos.filter(el => el.id == id);
+    const workoutData = JSON.parse(localStorage.getItem("workoutData"));
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
     const [form, setForm] = useState({
         name: "",
         series: null,
         reps: null,
         weight_current: null,
+    });
+    const WorkoutName = workoutData.map((el) => {
+        if(el.id == id) {
+            return el.name
+        }
     });
 
     function loadExercises() {
@@ -27,7 +30,7 @@ export default function WorkoutIdPage() {
                 <h1>Acompanhe seus treinos</h1>
                 <WorkoutBox>
                     <TitleBox>
-                        <h1>{workoutId[0].name}</h1>
+                        <h1>{WorkoutName}</h1>
                     </TitleBox>
                     <ExerciseBox />
                 </WorkoutBox>
@@ -49,15 +52,23 @@ export default function WorkoutIdPage() {
     function addNewExercise(e) {
         e.preventDefault();
 
-        postExercise(form, id)
+        const body = {
+            name: form.name,
+            series: Number(form.series),
+            reps: Number(form.reps),
+            weight_current: Number(form.weight_current)
+        };
+
+        postExercise(body, id)
         .then((res) => {
-            navigate(`/home/workout/${id}`)
+            setIsPopUpVisible(false);
+            window.location.reload();
         })
         .catch((error) => {
             Swal.fire({
                 icon: "error",
                 title: "Ops...",
-                text: `${error.response}`
+                text: `${error.response.status}`
             });
             setForm({
                 name: "",

@@ -27,6 +27,11 @@ function getWorkouts() {
     return axios.get(getWorkouts, createHeaders());
 };
 
+function getExercises(id) {
+    const getExercises = `${URL_BASE}/workout/${id}`
+    return axios.get(getExercises, createHeaders());
+}
+
 function postWorkout(body) {
     const postWorkout = `${URL_BASE}/workout`;
     return axios.post(postWorkout, body, createHeaders());
@@ -37,10 +42,23 @@ function postExercise(body, id) {
     return axios.post(postExercise, body, createHeaders());
 };
 
+function updateExercise(body, id) {
+    const updateExercise = `${URL_BASE}/workout/exercise/${id}`
+    return axios.put(updateExercise, body, createHeaders());
+}
+
+function deleteExercise(id) {
+    const deleteExercise = `${URL_BASE}/workout/exercise/${id}`
+    return axios.delete(deleteExercise, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
     getWorkouts,
+    getExercises,
     postWorkout,
-    postExercise
+    postExercise,
+    updateExercise,
+    deleteExercise,
 };

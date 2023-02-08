@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getWorkouts, postWorkout } from "../../service/api";
 import { ThreeDots } from "react-loader-spinner";
 import Exit from "../../assets/images/Close.png";
 import Swal from "sweetalert2";
-import workoutsContext from "../../context/workouts-context";
 
 export default function WorkoutBox() {
     const [workouts, setWorkouts] = useState([]);
@@ -15,7 +14,6 @@ export default function WorkoutBox() {
         name: "",
     });
     const navigate = useNavigate();
-    const {setWorkoutInfos} = useContext(workoutsContext);
 
     useEffect(() => {
         setLoading(false);
@@ -23,7 +21,7 @@ export default function WorkoutBox() {
             .then((res) => {
                 setWorkouts(res.data);
                 setLoading(true);
-                setWorkoutInfos(res.data);
+                localStorage.setItem("workoutData", JSON.stringify(res.data));
             })
             .catch((error) => console.log(error));
     }, []);

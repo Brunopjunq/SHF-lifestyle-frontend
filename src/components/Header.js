@@ -12,7 +12,10 @@ export default function Header() {
             <HeaderContainer>
                 <BsPersonFill onClick={() => navigate("/")} />
                 <img src={Logo} alt="Logo"/>
-                <ImExit />
+                <ImExit onClick={() => {
+                    navigate("/");
+                    localStorage.clear();
+                }} />
             </HeaderContainer>
     )
 }
