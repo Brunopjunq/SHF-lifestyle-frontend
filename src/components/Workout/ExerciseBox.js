@@ -160,7 +160,7 @@ export default function ExerciseBox() {
                 <PopUpTrash>
                 <img src={Exit} onClick={() => setIsPopUpTrashVisible(false)}/>
                 <PopUpTrashBox>
-                    <p>Tem certeza que deseja excluir o exercício {deletedIdName}?</p>
+                    <p>Tem certeza que deseja excluir o exercício "{deletedIdName}"?</p>
                     <div>
                         <button onClick={() => setIsPopUpTrashVisible(false)}>NÃO</button>
                         <button onClick={deleteRequest}>SIM</button>

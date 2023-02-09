@@ -30,12 +30,12 @@ function getWorkouts() {
 function getExercises(id) {
     const getExercises = `${URL_BASE}/workout/${id}`
     return axios.get(getExercises, createHeaders());
-}
+};
 
 function postWorkout(body) {
     const postWorkout = `${URL_BASE}/workout`;
     return axios.post(postWorkout, body, createHeaders());
-}
+};
 
 function postExercise(body, id) {
     const postExercise = `${URL_BASE}/workout/${id}`
@@ -45,12 +45,32 @@ function postExercise(body, id) {
 function updateExercise(body, id) {
     const updateExercise = `${URL_BASE}/workout/exercise/${id}`
     return axios.put(updateExercise, body, createHeaders());
-}
+};
 
 function deleteExercise(id) {
     const deleteExercise = `${URL_BASE}/workout/exercise/${id}`
     return axios.delete(deleteExercise, createHeaders());
-}
+};
+
+function getAerobicsbyDay(date) {
+    const getAerobics = `${URL_BASE}/aerobics/${date}`
+    return axios.get(getAerobics, createHeaders());
+};
+
+function postAerobic(body, date) {
+    const postAerobic = `${URL_BASE}/aerobics/${date}`
+    return axios.post(postAerobic, body, createHeaders());
+};
+
+function updateAerobic(body, date, id) {
+    const updateAerobic = `${URL_BASE}/aerobics/${date}/${id}`
+    return axios.put(updateAerobic, body, createHeaders());
+};
+
+function deleteAerobic(id) {
+    const deleteAerobic = `${URL_BASE}/aerobics/${id}`
+    return axios.delete(deleteAerobic, createHeaders());
+};
 
 export {
     postSignUp,
@@ -61,4 +81,8 @@ export {
     postExercise,
     updateExercise,
     deleteExercise,
+    getAerobicsbyDay,
+    postAerobic,
+    updateAerobic,
+    deleteAerobic,
 };

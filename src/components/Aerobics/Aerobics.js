@@ -37,7 +37,7 @@ const DayBox = styled.div`
     justify-content: space-between;
 
     h2 {
-        font-size:20px;
+        font-size:25px;
         font-weight: bold;
         color: white;
     }
