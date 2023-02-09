@@ -9,6 +9,7 @@ import Workouts from "./components/Workout/Workouts";
 import Aerobics from "./components/Aerobics/Aerobics";
 import WorkoutIdPage from "./components/Workout/WorkoutIdPage";
 import useToken from "./hooks/useToken";
+import AerobicsHistoric from "./components/Aerobics/AerobicsHistoric/AerobicsHistoric";
 
 export default function App() {
 
@@ -30,6 +31,7 @@ export default function App() {
                             <Route path="workout" element={<Workouts />} />
                             <Route path="workout/:id" element={<WorkoutIdPage />} />
                             <Route path="aerobics" element={<Aerobics />} />
+                            <Route path="aerobics/historic" element={<AerobicsHistoric />} />
                             <Route path="summary" element={<Aerobics />} />
                         </Route>
                     </Routes>

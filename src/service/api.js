@@ -57,6 +57,11 @@ function getAerobicsbyDay(date) {
     return axios.get(getAerobics, createHeaders());
 };
 
+function getAllAerobics() {
+    const getAllAerobics = `${URL_BASE}/aerobics`;
+    return axios.get(getAllAerobics, createHeaders());
+};
+
 function postAerobic(body, date) {
     const postAerobic = `${URL_BASE}/aerobics/${date}`
     return axios.post(postAerobic, body, createHeaders());
@@ -85,4 +90,5 @@ export {
     postAerobic,
     updateAerobic,
     deleteAerobic,
+    getAllAerobics
 };

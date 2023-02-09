@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AerobicsBox from "./AerobicsBox";
-import Exit from "../../assets/images/Close.png";
+import Exit from "../../../assets/images/Close.png"
+import AerobicsHistoricBox from "./AerobicsHistoricBox";
 
-export default function Aerobics() {
+export default function AerobicsHistoric() {
     const navigate = useNavigate();
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
     const [date, setDate] = useState("");
@@ -15,10 +15,10 @@ export default function Aerobics() {
                 <h1>Acompanhe seus treinos Aeróbicos</h1>
                 <DayBox>
                     <a onClick={() => setIsPopUpVisible(true)}>Escolha outro dia</a>
-                    <h2>Hoje</h2>
-                    <a onClick={() => navigate("/home/aerobics/historic")}>Ver histório completo</a>
+                    <h2>Histórico</h2>
+                    <a onClick={() => navigate("/home/aerobics")}>Ir para o dia de Hoje</a>
                 </DayBox>
-                <AerobicsBox />
+               <AerobicsHistoricBox />
             </Container>          
         )
     };
@@ -32,7 +32,7 @@ export default function Aerobics() {
         if(date == today) {
             setIsPopUpVisible(false);
             setDate("");
-            return;
+            return navigate("/home/aerobics");
         }
 
         navigate(`/home/aerobics/${date}`);
@@ -63,6 +63,7 @@ export default function Aerobics() {
             )
         }
     }
+
 
     const PageInfo = loadPage();
     const PopUpInfo = chooseDate();
