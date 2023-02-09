@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import WorkoutBox from "./WorkoutBox";
 
-export default function Workouts() {
+export default function FoodsResume() {
     return (
         <>
         <Container>
-            <h1>Acompanhe seus treinos</h1>
-            <WorkoutBox />
+            <h1>Acompanhe sua Alimentação</h1>
+            {/* <WorkoutBox /> */}
         </Container>
         </>
     )
