@@ -11,7 +11,7 @@ export default function Header() {
     return (
             <HeaderContainer>
                 <BsPersonFill onClick={() => navigate("/")} />
-                <img src={Logo} alt="Logo"/>
+                <img src={Logo} alt="Logo" onClick={() => navigate("/home/summary")}/>
                 <ImExit onClick={() => {
                     navigate("/");
                     localStorage.clear();
@@ -31,5 +31,6 @@ const HeaderContainer = styled.header`
 
     img {
         height: 75px;
+        cursor: pointer;
     }
 `

@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import AerobicsBox from "./AerobicsBox";
-import Exit from "../../assets/images/Close.png";
+import Aerobics from "../Aerobics";
+import Exit from "../../../assets/images/Close.png"
+import AerobicsDateBox from "./AerobicsDateBox";
 
-export default function Aerobics() {
-    const navigate = useNavigate();
+export default function AerobicsDate() {
+    const { date } = useParams();
+    const dateBr = date.split('-').reverse().join('/');
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-    const [date, setDate] = useState("");
+    const navigate = useNavigate();
+    const DateNew = new Date();
+    const today = DateNew.toISOString().slice(0,10);
+    const [newDate, setNewDate] = useState("");
 
     function loadPage() {
         return (
@@ -15,10 +20,10 @@ export default function Aerobics() {
                 <h1>Acompanhe seus treinos Aeróbicos</h1>
                 <DayBox>
                     <a onClick={() => setIsPopUpVisible(true)}>Escolha outro dia</a>
-                    <h2>Hoje</h2>
+                    <h2>{dateBr}</h2>
                     <a onClick={() => navigate("/home/aerobics/historic")}>Ver histório completo</a>
                 </DayBox>
-                <AerobicsBox />
+                <AerobicsDateBox />
             </Container>          
         )
     };
@@ -26,16 +31,7 @@ export default function Aerobics() {
     function changeDate(e) {
         e.preventDefault();
 
-        const newDate = new Date();
-        const today = newDate.toISOString().slice(0,10);
-
-        if(date == today) {
-            setIsPopUpVisible(false);
-            setDate("");
-            return;
-        }
-
-        navigate(`/home/aerobics/${date}`);
+        navigate(`/home/aerobics/${newDate}`);
         setIsPopUpVisible(false);
     };
 
@@ -47,10 +43,10 @@ export default function Aerobics() {
                     <PopUpBox onSubmit={changeDate}>
                     <input
                         required 
-                        name="date"
+                        name="newDate"
                         type="date"
                         value={date}
-                        onChange={e => setDate(e.target.value)}
+                        onChange={e => setNewDate(e.target.value)}
                         ></input>
                         <button>Escolha uma data</button>
                     </PopUpBox>
@@ -66,13 +62,19 @@ export default function Aerobics() {
     const PageInfo = loadPage();
     const PopUpInfo = chooseDate();
 
-    return (
-        <>
-        {PageInfo}
-        {PopUpInfo}
-        </>
-    )
-};
+    if(date == today) {
+        return <Aerobics />
+    } else {
+        return (
+            <>
+            {PageInfo}
+            {PopUpInfo}
+            </>
+        )
+    }
+
+}
+
 
 const Container = styled.div`
     width: 100%;
