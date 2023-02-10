@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import WaterBox from "./WaterBox";
+import WeightBox from "./WeightBox";
 
 export default function UserSummary() {
     const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
@@ -12,6 +13,7 @@ export default function UserSummary() {
                 <Main />
                 <SideBar>
                     <WaterBox />
+                    <WeightBox />
                 </SideBar>
             </Content>
         </Container>
@@ -46,5 +48,6 @@ const SideBar = styled.div`
     width: 25%;
     min-height: 600px;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `

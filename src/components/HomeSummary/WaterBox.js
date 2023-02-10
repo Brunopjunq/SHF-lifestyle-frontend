@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Glass from "../../assets/images/Glass.png";
 import Minus from "../../assets/images/Minus.png";
 import Plus from "../../assets/images/Plus.png";
-import { getWaterByDay, postWaterCount } from "../../service/api";
+import { getWaterByDay, increaseWaterCount, postWaterCount } from "../../service/api";
 
 export default function WaterBox() {
     const newDate = new Date();
@@ -34,6 +34,15 @@ export default function WaterBox() {
         .catch((error) => console.log(error));
     };
 
+    function addWaterCount() {
+        increaseWaterCount(today)
+        .then((res) => {
+            setWaterCount(res.data);
+            setReload(true);
+        })
+        .catch((error) => console.log(error));
+    };
+
 
     function LoadWaterInfo() {
         if(waterCount.length > 0) {
@@ -41,7 +50,7 @@ export default function WaterBox() {
                 <Container>
                     <img src={Glass} className="glass"/>
                     <img src={Minus} className="minus" />
-                    <img src={Plus} className="plus"/>
+                    <img src={Plus} className="plus" onClick={addWaterCount}/>
                     <div>{waterCount[0].quantity}</div>
                 </Container>
             )
@@ -75,6 +84,7 @@ const Container = styled.div`
     align-items: center;
     text-align: center;
     font-weight: bold;
+    margin-bottom: 20px;
 
     .glass {
         height: 150px;
@@ -134,6 +144,7 @@ const AddContainer = styled.div`
     text-align: center;
     font-weight: bold;
     cursor: pointer;;
+    margin-bottom: 20px;
 
     :hover {
         background-color: #8eddec;

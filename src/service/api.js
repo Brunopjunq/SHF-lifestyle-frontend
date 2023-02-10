@@ -88,14 +88,10 @@ function getWaterByDay(date) {
 };
 
 function increaseWaterCount(date) {
-    const increaseWaterCount = `${URL_BASE}/water/${date}/increase`
-    return axios.put(increaseWaterCount, createHeaders());
-}
+    const addWater = `${URL_BASE}/water/${date}/increase`
+    return axios.put(addWater, createHeaders());
+};
 
-function decreaseWaterCount(date) {
-    const decreaseWaterCount = `${URL_BASE}/water/${date}/decrease`
-    return axios.put(decreaseWaterCount, createHeaders());
-}
 
 
 export {
@@ -115,5 +111,4 @@ export {
     postWaterCount,
     getWaterByDay,
     increaseWaterCount,
-    decreaseWaterCount,
 };
