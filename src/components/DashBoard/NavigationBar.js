@@ -7,7 +7,7 @@ export default function NavigationBar() {
     return (
         <NavigationBarBox>
             <h1 onClick={() => navigate("/home/summary")}>Home</h1>
-            <h1 onClick={() => navigate("/home/aerobics")}>Exercícios Aeróbicos</h1>
+            <h1 onClick={() => navigate("/home/aerobics/")}>Exercícios Aeróbicos</h1>
             <h1 onClick={() => navigate("/home/foods")}>Alimentação</h1>
             <h1 onClick={() => navigate("/home/workout")}>Musculação</h1>
         </NavigationBarBox>

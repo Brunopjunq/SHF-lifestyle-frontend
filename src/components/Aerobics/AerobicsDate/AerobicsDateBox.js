@@ -14,7 +14,7 @@ export default function AerobicsDateBox() {
         calories: null,
     });
     const newDate = new Date();
-    const today = newDate.toISOString().slice(0,10);
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
 
 
     function LoadPage() {

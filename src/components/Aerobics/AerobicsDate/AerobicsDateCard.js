@@ -11,8 +11,6 @@ export default function AerobicsDateCard() {
     const [aerobics, setAerobics] = useState([]);
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
     const [isPopUpTrashVisible, setIsPopUpTrashVisible] = useState(false);
-    const newDate = new Date();
-    const today = newDate.toISOString().slice(0,10);
     const [form, setForm] = useState({
         time: null,
         calories: null,

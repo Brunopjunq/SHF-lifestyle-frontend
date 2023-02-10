@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import ExerciseBox from "./ExerciseBox";
 import Exit from "../../assets/images/Close.png";
@@ -7,7 +7,6 @@ import { postExercise } from "../../service/api";
 import Swal from "sweetalert2";
 
 export default function WorkoutIdPage() {
-    const navigate = useNavigate();
     const { id } = useParams();
     const workoutData = JSON.parse(localStorage.getItem("workoutData"));
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);

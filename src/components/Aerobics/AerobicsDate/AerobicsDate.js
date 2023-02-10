@@ -11,7 +11,7 @@ export default function AerobicsDate() {
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
     const navigate = useNavigate();
     const DateNew = new Date();
-    const today = DateNew.toISOString().slice(0,10);
+    const today = DateNew.toLocaleString().slice(0,10).split('/').reverse().join('-');
     const [newDate, setNewDate] = useState("");
 
     function loadPage() {

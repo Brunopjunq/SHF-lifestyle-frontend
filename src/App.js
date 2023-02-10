@@ -12,6 +12,7 @@ import useToken from "./hooks/useToken";
 import AerobicsHistoric from "./components/Aerobics/AerobicsHistoric/AerobicsHistoric";
 import AerobicsDate from "./components/Aerobics/AerobicsDate/AerobicsDate";
 import FoodsResume from "./components/foods/foodResume"
+import UserSummary from "./components/HomeSummary/UserSummary";
 
 export default function App() {
 
@@ -36,7 +37,7 @@ export default function App() {
                             <Route path="aerobics/historic" element={<AerobicsHistoric />} />
                             <Route path="aerobics/:date" element={<AerobicsDate />} />
                             <Route path="foods" element={<FoodsResume />} />
-                            <Route path="summary" element={<Aerobics />} />
+                            <Route path="summary" element={<UserSummary />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

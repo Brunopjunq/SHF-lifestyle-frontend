@@ -27,7 +27,7 @@ export default function AerobicsHistoric() {
         e.preventDefault();
 
         const newDate = new Date();
-        const today = newDate.toISOString().slice(0,10);
+        const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
 
         if(date == today) {
             setIsPopUpVisible(false);

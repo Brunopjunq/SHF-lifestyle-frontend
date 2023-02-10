@@ -35,8 +35,8 @@ export default function SignInPage() {
             localStorage.setItem(
                 "shf_lifestyle",
                 JSON.stringify({
-                    id: res.data.id,
-                    name: res.data.name,
+                    id: res.data.user.id,
+                    name: res.data.user.name,
                     token: res.data.token,
                 })
             );
