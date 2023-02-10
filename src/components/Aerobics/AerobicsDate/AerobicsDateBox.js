@@ -5,6 +5,7 @@ import { postAerobic } from "../../../service/api";
 import Swal from "sweetalert2";
 import Exit from "../../../assets/images/Close.png";
 import AerobicsDateCard from "./AerobicsDateCard";
+import { useParams } from "react-router-dom";
 
 export default function AerobicsDateBox() {
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
@@ -16,6 +17,7 @@ export default function AerobicsDateBox() {
     const newDate = new Date();
     const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
 
+    const { date } = useParams();
 
     function LoadPage() {
         return (
@@ -44,7 +46,7 @@ export default function AerobicsDateBox() {
             calories: Number(form.calories)
         };
 
-        postAerobic(body, today)
+        postAerobic(body, date)
         .then((res) => {
             window.location.reload();
             setIsPopUpVisible(false);

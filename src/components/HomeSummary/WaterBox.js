@@ -34,14 +34,6 @@ export default function WaterBox() {
         .catch((error) => console.log(error));
     };
 
-    function addWaterCount() {
-        increaseWaterCount(today)
-        .then((res) => {
-            setWaterCount(res.data);
-            setReload(true);
-        })
-        .catch((error) => console.log(error));
-    };
 
 
     function LoadWaterInfo() {
@@ -50,7 +42,7 @@ export default function WaterBox() {
                 <Container>
                     <img src={Glass} className="glass"/>
                     <img src={Minus} className="minus" />
-                    <img src={Plus} className="plus" onClick={addWaterCount}/>
+                    <img src={Plus} className="plus" />
                     <div>{waterCount[0].quantity}</div>
                 </Container>
             )

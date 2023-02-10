@@ -89,6 +89,8 @@ function getWaterByDay(date) {
 
 function increaseWaterCount(date) {
     const addWater = `${URL_BASE}/water/${date}/increase`
+    const config = createHeaders();
+    console.log(config);
     return axios.put(addWater, createHeaders());
 };
 

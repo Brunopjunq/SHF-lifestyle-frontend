@@ -13,6 +13,9 @@ export default function WeightBox() {
             <WeightText>
                 <h2>74,5<span style={{fontSize: 15}}>Kg</span></h2>   
             </WeightText>
+            <AddButton>
+                Adicione um novo peso
+            </AddButton>
             <h3>Ultima atualização: 10/02/2023</h3>
         </Container>
     )
@@ -61,6 +64,20 @@ const HistoricButton = styled.div`
         cursor: pointer;
         background-color: lightgray;
     }
+`
+
+const AddButton = styled.div`
+    position: absolute;
+    bottom: 25px;
+    left: 37px;
+    font-size: 12px;
+    border: solid 1px black;
+    border-radius: 5px;
+
+:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
 `
 
 
