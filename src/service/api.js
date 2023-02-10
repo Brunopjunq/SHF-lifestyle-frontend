@@ -77,6 +77,27 @@ function deleteAerobic(id) {
     return axios.delete(deleteAerobic, createHeaders());
 };
 
+function postWaterCount(body,date) {
+    const postWaterCount = `${URL_BASE}/water/${date}`
+    return axios.post(postWaterCount, body, createHeaders());
+};
+
+function getWaterByDay(date) {
+    const getWaterbyDay = `${URL_BASE}/water/${date}`
+    return axios.get(getWaterbyDay, createHeaders());
+};
+
+function increaseWaterCount(date) {
+    const increaseWaterCount = `${URL_BASE}/water/${date}/increase`
+    return axios.put(increaseWaterCount, createHeaders());
+}
+
+function decreaseWaterCount(date) {
+    const decreaseWaterCount = `${URL_BASE}/water/${date}/decrease`
+    return axios.put(decreaseWaterCount, createHeaders());
+}
+
+
 export {
     postSignUp,
     postLogin,
@@ -90,5 +111,9 @@ export {
     postAerobic,
     updateAerobic,
     deleteAerobic,
-    getAllAerobics
+    getAllAerobics,
+    postWaterCount,
+    getWaterByDay,
+    increaseWaterCount,
+    decreaseWaterCount,
 };
