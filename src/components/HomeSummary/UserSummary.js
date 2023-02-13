@@ -10,7 +10,9 @@ export default function UserSummary() {
         <Container>
             <h1>Bem vindo, {userData.name}</h1>
             <Content>
-                <Main />
+                <Main>
+                    Em Breve!
+                </Main>
                 <SideBar>
                     <WaterBox />
                     <WeightBox />
@@ -42,6 +44,7 @@ const Main = styled.div`
     width:75%;
     min-height:600px;
     border-right: solid 1px white;
+    color: white;
 `
 
 const SideBar = styled.div`

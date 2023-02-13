@@ -328,7 +328,7 @@ const PopUpTrash = styled.div`
     position: absolute;
     top: 0px;
     left: 0px;
-    /* visibility: ${props => props.isPopUpVisible}; */
+
     img {
         position: absolute;
         top: 25px;

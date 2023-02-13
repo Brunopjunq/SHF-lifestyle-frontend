@@ -37,6 +37,11 @@ function postWorkout(body) {
     return axios.post(postWorkout, body, createHeaders());
 };
 
+function deleteWorkout(id) {
+    const deleteWorkout = `${URL_BASE}/workout/${id}`;
+    return axios.delete(deleteWorkout, createHeaders());
+}
+
 function postExercise(body, id) {
     const postExercise = `${URL_BASE}/workout/${id}`
     return axios.post(postExercise, body, createHeaders());
@@ -102,6 +107,7 @@ export {
     getWorkouts,
     getExercises,
     postWorkout,
+    deleteWorkout,
     postExercise,
     updateExercise,
     deleteExercise,

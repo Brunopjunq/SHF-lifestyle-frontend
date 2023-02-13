@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ExerciseBox from "./ExerciseBox";
 import Exit from "../../assets/images/Close.png";
-import { postExercise } from "../../service/api";
+import { deleteWorkout, postExercise } from "../../service/api";
 import Swal from "sweetalert2";
 
 export default function WorkoutIdPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const workoutData = JSON.parse(localStorage.getItem("workoutData"));
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+    const [isPopUpTrashVisible, setIsPopUpTrashVisible] = useState("");
     const [form, setForm] = useState({
         name: "",
         series: null,
@@ -30,6 +32,9 @@ export default function WorkoutIdPage() {
                 <WorkoutBox>
                     <TitleBox>
                         <h1>{WorkoutName}</h1>
+                        <TrashBox onClick={() => setIsPopUpTrashVisible(true)}>
+                            Excluir Treino
+                        </TrashBox>
                     </TitleBox>
                     <ExerciseBox />
                 </WorkoutBox>
@@ -128,13 +133,45 @@ export default function WorkoutIdPage() {
         }
     };
 
+    function deleteRequest() {
+        deleteWorkout(id)
+        .then((res) => {
+            setIsPopUpTrashVisible(false);
+            navigate("/home/workout");
+        })
+        .catch((error) => console.log(error))
+    }
+
+    function deleteUserWorkout() {
+        if(isPopUpTrashVisible === true) {
+            return (
+                <PopUpTrash>
+                <img src={Exit} onClick={() => setIsPopUpTrashVisible(false)}/>
+                <PopUpTrashBox>
+                    <p>Tem certeza que deseja excluir "{WorkoutName}"?</p>
+                    <div>
+                        <button onClick={() => setIsPopUpTrashVisible(false)}>NÃO</button>
+                        <button onClick={deleteRequest}>SIM</button>
+                    </div>
+                </PopUpTrashBox>
+            </PopUpTrash>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
     const PageInfo = loadExercises();
     const PopUpInfo = newExercise();
+    const PopUpTrashInfo = deleteUserWorkout();
 
     return (
         <>
         {PageInfo}
         {PopUpInfo}
+        {PopUpTrashInfo}
         </>
     )
 };
@@ -165,10 +202,28 @@ const TitleBox = styled.div`
     justify-content: center;
     align-items: center;
     border-bottom: solid 1px black;
+    position: relative;
     
     h1 {
         color: black;
     }
+`
+
+const TrashBox = styled.div`
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    width: 150px;
+    height:30px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+
 `
 
 const AddExercise = styled.div`
@@ -251,5 +306,66 @@ const PopUpBox = styled.form`
         justify-content: center;
         align-items: center;
         cursor: pointer;
+    }
+`
+
+const PopUpTrash = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    img {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        cursor: pointer;
+    }
+`
+
+const PopUpTrashBox = styled.div`
+    width: 348px;
+    height: 210px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    p {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        color: #000000;
+        margin: 33px 0 47px;
+    }
+    button {
+        width: 95px;
+        height: 52px;
+        background: red;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #FFFFFF;
+        border: none;
+        cursor: pointer;
+        &:last-child {
+            background-color: #00004d;
+        }
+    }
+    div {
+        display: flex;
+        gap: 14px;
     }
 `

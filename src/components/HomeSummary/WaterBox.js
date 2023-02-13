@@ -48,8 +48,10 @@ export default function WaterBox() {
             )
         } else {
             return (
-                <AddContainer onClick={createWaterCount}>
+                // <AddContainer onClick={createWaterCount}>
+                <AddContainer>
                     <h2>Adicione o consumo de água do dia</h2>
+                    <a>EM BREVE!</a>
                     <img src={Glass} className="glassNew"/>
                 </AddContainer>                
             )
@@ -133,6 +135,7 @@ const AddContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     text-align: center;
     font-weight: bold;
     cursor: pointer;;
@@ -152,5 +155,10 @@ const AddContainer = styled.div`
 
     h2 {
         z-index: 1;
+    }
+
+    a {
+        z-index: 1;
+        font-size: 30px;
     }
 `

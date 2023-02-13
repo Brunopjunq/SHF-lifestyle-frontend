@@ -5,6 +5,7 @@ export default function FoodsResume() {
         <>
         <Container>
             <h1>Acompanhe sua Alimentação</h1>
+            <a>Em Breve!</a>
             {/* <WorkoutBox /> */}
         </Container>
         </>
@@ -19,5 +20,9 @@ const Container = styled.div`
 
     h1 {
         color: #dfcd81;
+    }
+
+    a {
+        color: white;
     }
 `
