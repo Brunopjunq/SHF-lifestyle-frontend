@@ -24,7 +24,7 @@ export default function WorkoutBox() {
                 localStorage.setItem("workoutData", JSON.stringify(res.data));
             })
             .catch((error) => console.log(error));
-    }, []);
+    }, [isPopUpVisible]);
     
     let workoutSeries = workouts.length;
     let workoutReps = workouts.reduce(getTotal, 0);
@@ -88,7 +88,8 @@ export default function WorkoutBox() {
         
         postWorkout(form)
         .then((res) => {
-            navigate(`/home/workout/${res.data.id}`)
+            // navigate(`/home/workout/${res.data.id}`)
+            setIsPopUpVisible(false);
         })
         .catch((error) => {
             Swal.fire({

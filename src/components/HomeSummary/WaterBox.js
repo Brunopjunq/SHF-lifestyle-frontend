@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Glass from "../../assets/images/Glass.png";
 import Minus from "../../assets/images/Minus.png";
 import Plus from "../../assets/images/Plus.png";
-import { getWaterByDay, increaseWaterCount, postWaterCount } from "../../service/api";
+import { getWaterByDay, postWaterCount } from "../../service/api";
 
 export default function WaterBox() {
     const newDate = new Date();

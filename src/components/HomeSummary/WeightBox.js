@@ -1,23 +1,57 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import WeightImage from "../../assets/images/weight.jpg";
+import { getWeights } from "../../service/api";
 
 export default function WeightBox() {
-    return (
-        // <AddContainer>
-        //     Adicione e controle seu peso
-        // </AddContainer>
+    const [weights, setWeights] = useState([]);
+    const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+    const newDate = new Date();
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
+    const [lastDate, setLastDate] = useState("");
 
-        <Container>
-            <HistoricButton>
-                Ver histórico completo
-            </HistoricButton>
-            <WeightText>
-                <h2>74,5<span style={{fontSize: 15}}>Kg</span></h2>   
-            </WeightText>
-            <AddButton>
-                Adicione um novo peso
-            </AddButton>
-            <h3>Ultima atualização: 10/02/2023</h3>
-        </Container>
+    useEffect(() => {
+        getWeights()
+        .then((res) => {
+            setWeights(res.data);
+            const date = res.data[0].date;
+            const StringDate = date.toLocaleString().slice(0,10).split('-').reverse().join('/');
+            setLastDate(StringDate);
+        })
+        .catch((error) => console.log(error))
+    }, [])
+
+    function LoadPage() {
+        if(weights.length > 0) {
+            return (
+                <Container>
+                    <HistoricButton>
+                        Ver histórico completo
+                    </HistoricButton>
+                    <WeightText>
+                        <h2>{weights[0].weight}<span style={{fontSize: 15}}>Kg</span></h2>   
+                    </WeightText>
+                    <AddButton>
+                        Adicione um novo peso
+                    </AddButton>
+                    <h3>Ultima atualização: {lastDate}</h3>
+                </Container>
+            )
+        } else {
+            return (
+                <AddContainer>
+                    Adicione e controle seu peso
+                </AddContainer>
+            )
+        }
+    }
+
+    const PageInfo = LoadPage();
+
+    return (
+        <>
+        {PageInfo}
+        </>
     )
 }
 
@@ -84,7 +118,8 @@ const AddButton = styled.div`
 const AddContainer = styled.div`
     width: 80%;
     height: 150px;
-    background-color: white;
+    background:url(${WeightImage});
+    background-size: cover;
     border-radius: 20px;
     position: relative;
     display: flex;
@@ -92,10 +127,12 @@ const AddContainer = styled.div`
     align-items: center;
     text-align: center;
     font-weight: bold;
+    color: white;
+    padding-bottom: 20px;
     cursor: pointer;
 
     :hover {
-        background-color: gray;
+        opacity: 0.5;
     }
 `
 

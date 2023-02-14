@@ -29,7 +29,7 @@ export default function ExerciseBox() {
             localStorage.setItem("exerciseData", JSON.stringify(res.data));
         })
         .catch((error) => console.log(error));
-    }, [exerciseId, deletedId]);
+    }, [exerciseId, deletedId, isPopUpVisible]);
 
     function loadExercises() {
         return (

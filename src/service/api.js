@@ -92,13 +92,10 @@ function getWaterByDay(date) {
     return axios.get(getWaterbyDay, createHeaders());
 };
 
-function increaseWaterCount(date) {
-    const addWater = `${URL_BASE}/water/${date}/increase`
-    const config = createHeaders();
-    console.log(config);
-    return axios.put(addWater, createHeaders());
+function getWeights() {
+    const getWeights = `${URL_BASE}/weight`
+    return axios.get(getWeights, createHeaders());
 };
-
 
 
 export {
@@ -118,5 +115,5 @@ export {
     getAllAerobics,
     postWaterCount,
     getWaterByDay,
-    increaseWaterCount,
+    getWeights,
 };
