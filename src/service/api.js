@@ -92,11 +92,20 @@ function getWaterByDay(date) {
     return axios.get(getWaterbyDay, createHeaders());
 };
 
+function increaseWaterCount(body, date) {
+    const increaseWater = `${URL_BASE}/water/${date}/increase`
+    return axios.put(increaseWater,body, createHeaders());
+}
+
 function getWeights() {
     const getWeights = `${URL_BASE}/weight`
     return axios.get(getWeights, createHeaders());
 };
 
+function postWeight(body,date) {
+    const postWeight = `${URL_BASE}/weight/${date}`
+    return axios.post(postWeight,body, createHeaders());
+}
 
 export {
     postSignUp,
@@ -114,6 +123,8 @@ export {
     deleteAerobic,
     getAllAerobics,
     postWaterCount,
+    increaseWaterCount,
     getWaterByDay,
     getWeights,
+    postWeight,
 };

@@ -3,13 +3,14 @@ import styled from "styled-components";
 import Glass from "../../assets/images/Glass.png";
 import Minus from "../../assets/images/Minus.png";
 import Plus from "../../assets/images/Plus.png";
-import { getWaterByDay, postWaterCount } from "../../service/api";
+import { getWaterByDay, increaseWaterCount, postWaterCount } from "../../service/api";
 
 export default function WaterBox() {
     const newDate = new Date();
     const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
     const [waterCount, setWaterCount] = useState("");
     const [reload, setReload] = useState(false);
+    const [waterReload, setWaterReload] = useState(0);
 
     useEffect(() => {
         getWaterByDay(today)
@@ -18,7 +19,7 @@ export default function WaterBox() {
             setReload(false);
         })
         .catch((error) => console.log(error))
-    },[today,reload])
+    },[today,reload, waterReload])
 
 
     function createWaterCount() {
@@ -34,6 +35,17 @@ export default function WaterBox() {
         .catch((error) => console.log(error));
     };
 
+    function increaseWater() {
+        const body = {
+
+        }
+
+        increaseWaterCount(body,today)
+        .then((res) => {
+            setWaterReload(waterReload + 1)
+        })
+        .catch((error) => console.log(error));
+    };
 
 
     function LoadWaterInfo() {
@@ -42,14 +54,13 @@ export default function WaterBox() {
                 <Container>
                     <img src={Glass} className="glass"/>
                     <img src={Minus} className="minus" />
-                    <img src={Plus} className="plus" />
+                    <img src={Plus} className="plus" onClick={increaseWater}/>
                     <div>{waterCount[0].quantity}</div>
                 </Container>
             )
         } else {
             return (
-                // <AddContainer onClick={createWaterCount}>
-                <AddContainer>
+                <AddContainer onClick={createWaterCount}>
                     <h2>Adicione o consumo de água do dia</h2>
                     <a>EM BREVE!</a>
                     <img src={Glass} className="glassNew"/>
