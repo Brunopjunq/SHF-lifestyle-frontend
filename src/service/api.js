@@ -97,6 +97,11 @@ function increaseWaterCount(body, date) {
     return axios.put(increaseWater,body, createHeaders());
 }
 
+function decreaseWaterCount(body, date) {
+    const increaseWater = `${URL_BASE}/water/${date}/decrease`
+    return axios.put(increaseWater,body, createHeaders());
+}
+
 function getWeights() {
     const getWeights = `${URL_BASE}/weight`
     return axios.get(getWeights, createHeaders());
@@ -124,6 +129,7 @@ export {
     getAllAerobics,
     postWaterCount,
     increaseWaterCount,
+    decreaseWaterCount,
     getWaterByDay,
     getWeights,
     postWeight,

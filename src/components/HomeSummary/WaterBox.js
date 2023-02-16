@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Glass from "../../assets/images/Glass.png";
 import Minus from "../../assets/images/Minus.png";
 import Plus from "../../assets/images/Plus.png";
-import { getWaterByDay, increaseWaterCount, postWaterCount } from "../../service/api";
+import { decreaseWaterCount, getWaterByDay, increaseWaterCount, postWaterCount } from "../../service/api";
 
 export default function WaterBox() {
     const newDate = new Date();
@@ -36,9 +36,7 @@ export default function WaterBox() {
     };
 
     function increaseWater() {
-        const body = {
-
-        }
+        const body = {};
 
         increaseWaterCount(body,today)
         .then((res) => {
@@ -47,13 +45,22 @@ export default function WaterBox() {
         .catch((error) => console.log(error));
     };
 
+    function decreaseWater() {
+        const body = {};
+
+        decreaseWaterCount(body,today)
+        .then((res) => {
+            setWaterReload(waterReload - 1)
+        })
+        .catch((error) => console.log(error));
+    };
 
     function LoadWaterInfo() {
         if(waterCount.length > 0) {
             return (
                 <Container>
                     <img src={Glass} className="glass"/>
-                    <img src={Minus} className="minus" />
+                    <img src={Minus} className="minus" onClick={decreaseWater}/>
                     <img src={Plus} className="plus" onClick={increaseWater}/>
                     <div>{waterCount[0].quantity}</div>
                 </Container>
@@ -62,7 +69,6 @@ export default function WaterBox() {
             return (
                 <AddContainer onClick={createWaterCount}>
                     <h2>Adicione o consumo de água do dia</h2>
-                    <a>EM BREVE!</a>
                     <img src={Glass} className="glassNew"/>
                 </AddContainer>                
             )
@@ -166,10 +172,5 @@ const AddContainer = styled.div`
 
     h2 {
         z-index: 1;
-    }
-
-    a {
-        z-index: 1;
-        font-size: 30px;
     }
 `
