@@ -53,11 +53,11 @@ export default function WorkoutBox() {
                     </Link>
                 ))}
                 <AddWorkout onClick={() => setIsPopUpVisible(true)}>
-                    Adicione um novo Treino!
+                    Adicione um novo Treino
                 </AddWorkout>
                 </> : <><LoadingBox><ThreeDots color="#FFFFFF" /></LoadingBox>
                         <AddWorkout onClick={() => setIsPopUpVisible(true)}>
-                            Adicione um novo Treino!
+                            Adicione um novo Treino
                         </AddWorkout></>}
                 </>
             )
@@ -69,7 +69,7 @@ export default function WorkoutBox() {
                         <a>Você ainda não tem nenhum treino cadastrado!</a>
                     </LoadingBox>
                     <AddWorkout onClick={() => setIsPopUpVisible(true)}>
-                        Adicione um novo Treino!
+                        Adicione um novo Treino
                     </AddWorkout>
                 </>
             )
