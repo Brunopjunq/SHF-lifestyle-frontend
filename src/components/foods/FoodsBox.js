@@ -17,7 +17,7 @@ export default function FoodsBox(props) {
             <MealIcon>
                 <GiMeal />
             </MealIcon>
-            <ExerciseText>
+            <FoodText>
                 <NameText>{props.name}</NameText>
                 <InfoText>
                     <a>Quantidade: {props.quantity} g</a>
@@ -28,7 +28,7 @@ export default function FoodsBox(props) {
                     <a>Carb: {props.carbohydrate}g</a>
                     <a>Gord: {props.lipid}g</a>
                 </NutriText>
-            </ExerciseText>
+            </FoodText>
             <EditIcon>
                 <BiEdit />
                 <img src={Trash} onClick={() => {
@@ -102,7 +102,7 @@ const MealIcon = styled.div`
     align-items: center;
 `
 
-const ExerciseText = styled.div`
+const FoodText = styled.div`
     width: 90%;
     height: 50px;
     display: flex;
@@ -112,6 +112,7 @@ const ExerciseText = styled.div`
 const NameText = styled.div`
     height: 50px;
     width: 60%;
+    font-weight: bold;
     display: flex;
     align-items: center;
     padding-left: 10px;
