@@ -1,16 +1,66 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getMealsByDay, postMeal } from "../../service/api";
 import MealsBox from "./MealsBox";
 
 export default function FoodsResume() {
+    const newDate = new Date();
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
+    const [meals, setMeals] = useState("");
+    const [reload, setReload] = useState(0);
+
+    useEffect(() => {
+        getMealsByDay(today)
+        .then((res) => {
+            setMeals(res.data);
+            localStorage.setItem("mealsData", JSON.stringify(res.data));
+            setReload(0);
+        })
+        .catch((error) => console.log(error))
+    },[reload]);
+
+    function createMeals(name) {
+        const body = {
+            name: name,
+        };
+
+        postMeal(body,today)
+        .then((res) => {
+            setReload(reload + 1);
+        })
+        .catch((error) => console.log(error))
+    }
+    
+    function LoadMeals() {
+        if(meals.length > 0) {
+            return (
+                <Container>
+                    <h1>Acompanhe sua Alimentação</h1>
+                    <MealsBox />
+                </Container>
+            )
+        } else {
+            return (
+                <Container>
+                    <h1>Acompanhe sua Alimentação</h1>
+                    <AddMeals onClick={() => {
+                        createMeals('Café da Manhã');
+                        createMeals('Almoço');
+                        createMeals('Jantar');
+                        createMeals('Lanche');
+                    }}>
+                        Adicionar refeições do dia
+                    </AddMeals>
+                </Container>
+            )
+        }
+    }
+
+    const PageInfo = LoadMeals();
+
     return (
         <>
-        <Container>
-            <h1>Acompanhe sua Alimentação</h1>
-            {/* <AddMeals>
-                Adicionar refeições do dia
-            </AddMeals> */}
-            <MealsBox />
-        </Container>
+        {PageInfo}
         </>
     )
 }

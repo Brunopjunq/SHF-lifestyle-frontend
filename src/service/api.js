@@ -112,6 +112,16 @@ function postWeight(body,date) {
     return axios.post(postWeight,body, createHeaders());
 }
 
+function getMealsByDay(date) {
+    const getMealsByDay = `${URL_BASE}/meals/${date}`;
+    return axios.get(getMealsByDay, createHeaders());
+}
+
+function postMeal(body,date) {
+    const postMeal = `${URL_BASE}/meals/${date}`;
+    return axios.post(postMeal, body, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
@@ -133,4 +143,6 @@ export {
     getWaterByDay,
     getWeights,
     postWeight,
+    getMealsByDay,
+    postMeal,
 };

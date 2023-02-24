@@ -1,15 +1,28 @@
 import styled from "styled-components"
 import FoodsBox from "./FoodsBox"
 
-export default function MealsBox(name) {
+export default function MealsBox() {
+    const mealsData = JSON.parse(localStorage.getItem("mealsData"));
     return (
         <>
-            <Container>
-                <TitleBox>
-                    <h2>Café da Manha</h2>
-                </TitleBox>
-                <FoodsBox />
-            </Container>
+            {mealsData.map((el, index) => (
+                <Container key={index}>
+                    <TitleBox>
+                        <h2>{el.name}</h2>
+                    </TitleBox>
+                    {el.foods_meals.map((el,index) => (
+                        <FoodsBox 
+                        key={index} 
+                        name={el.foods.name} 
+                        quantity={el.quantity}
+                        calories={el.foods.calories * (el.quantity/100)}
+                        protein={el.foods.protein * (el.quantity/100)}
+                        carbohydrate={el.foods.carbohydrate * (el.quantity/100)}
+                        lipid={el.foods.lipid * (el.quantity/100)}
+                        />
+                    ))}
+                </Container>
+            ))}
         </>
     )
 }

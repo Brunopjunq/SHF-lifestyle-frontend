@@ -3,22 +3,22 @@ import Trash from "../../assets/images/redTrash.png";
 import { GiMeal } from "react-icons/gi";
 import { BiEdit } from "react-icons/bi";
 
-export default function FoodsBox() {
+export default function FoodsBox(props) {
     return (
         <Container>
         <MealIcon>
             <GiMeal />
         </MealIcon>
         <ExerciseText>
-            <NameText>Arroz Integral</NameText>
+            <NameText>{props.name}</NameText>
             <InfoText>
-                <a>Quantidade: 100 g</a>
-                <a>Calorias: 320 kcal</a>
+                <a>Quantidade: {props.quantity} g</a>
+                <a>Calorias: {props.calories} kcal</a>
             </InfoText>
             <NutriText>
-                <a>Prot: 22g</a>
-                <a>Carb: 20g</a>
-                <a>Gord: 20g</a>
+                <a>Prot: {props.protein}g</a>
+                <a>Carb: {props.carbohydrate}g</a>
+                <a>Gord: {props.lipid}g</a>
             </NutriText>
         </ExerciseText>
         <EditIcon>
