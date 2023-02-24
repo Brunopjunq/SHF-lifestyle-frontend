@@ -122,6 +122,11 @@ function postMeal(body,date) {
     return axios.post(postMeal, body, createHeaders());
 }
 
+function deleteFoodByMeal(id) {
+    const deleteFoodByMeal = `${URL_BASE}/meals/foodByMeal/${id}`;
+    return axios.delete(deleteFoodByMeal, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
@@ -145,4 +150,5 @@ export {
     postWeight,
     getMealsByDay,
     postMeal,
+    deleteFoodByMeal,
 };

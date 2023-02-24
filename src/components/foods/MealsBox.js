@@ -12,7 +12,8 @@ export default function MealsBox() {
                     </TitleBox>
                     {el.foods_meals.map((el,index) => (
                         <FoodsBox 
-                        key={index} 
+                        key={index}
+                        id={el.id} 
                         name={el.foods.name} 
                         quantity={el.quantity}
                         calories={el.foods.calories * (el.quantity/100)}
@@ -20,7 +21,11 @@ export default function MealsBox() {
                         carbohydrate={el.foods.carbohydrate * (el.quantity/100)}
                         lipid={el.foods.lipid * (el.quantity/100)}
                         />
+                    
                     ))}
+                    <AddBox>
+                        <h2>Adicione um novo alimento</h2>
+                    </AddBox>
                 </Container>
             ))}
         </>
@@ -52,5 +57,28 @@ const TitleBox = styled.div`
         color: black;
         font-size: 30px;
         font-weight: bold;
+    }
+`
+
+const AddBox = styled.div`
+    width:100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    
+    h2 {
+        color: black;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    :hover {
+
+        h2 {
+            color: green;
+        }
     }
 `

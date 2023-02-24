@@ -14,6 +14,7 @@ import AerobicsDate from "./components/Aerobics/AerobicsDate/AerobicsDate";
 import FoodsResume from "./components/foods/foodResume"
 import UserSummary from "./components/HomeSummary/UserSummary";
 import WeightControl from "./components/Weights/Weights";
+import SearchFoods from "./components/foods/SearchFoods";
 
 export default function App() {
 
@@ -38,6 +39,7 @@ export default function App() {
                             <Route path="aerobics/historic" element={<AerobicsHistoric />} />
                             <Route path="aerobics/:date" element={<AerobicsDate />} />
                             <Route path="foods" element={<FoodsResume />} />
+                            <Route path="foods/:mealId/add" element={<SearchFoods />} />
                             <Route path="summary" element={<UserSummary />} />
                             <Route path="weight" element={<WeightControl />} />
                         </Route>
