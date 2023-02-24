@@ -132,6 +132,11 @@ function getFoods(name) {
     return axios.get(getFoods, createHeaders());
 }
 
+function postFood(body) {
+    const postFood = `${URL_BASE}/foods`;
+    return axios.post(postFood, body, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
@@ -157,4 +162,5 @@ export {
     postMeal,
     deleteFoodByMeal,
     getFoods,
+    postFood,
 };

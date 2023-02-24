@@ -2,13 +2,24 @@ import { DebounceInput } from "react-debounce-input"
 import styled from "styled-components"
 import { GiMeal } from "react-icons/gi";
 import Add from "../../assets/images/AddGreen.png";
-import { getFoods } from "../../service/api";
+import { getFoods, postFood } from "../../service/api";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import Exit from "../../assets/images/Close.png";
+import Swal from "sweetalert2";
 
 export default function SearchFoods() {
     const [foods, setFoods] = useState([]);
     const { mealId } = useParams();
+    const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+    const [form, setForm] = useState({
+        name: null,
+        quantity: null,
+        calories: null,
+        protein: null,
+        carbohydrate: null,
+        lipid: null,
+    });
 
     function search(value) {
 
@@ -24,9 +35,103 @@ export default function SearchFoods() {
         .catch((error) => console.log(error))
     }
 
+    function handleForm(e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        });
+    }
 
-    return (
-        <Container>
+    function addNewFood(e) {
+        e.preventDefault();
+
+        postFood(form)
+        .then((res) => {
+            setIsPopUpVisible(false);
+        })
+        .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Ops...",
+                text: `${error.response.status}`
+            });
+            setForm({
+                name: null,
+                quantity: null,
+                calories: null,
+                protein: null,
+                carbohydrate: null,
+                lipid: null,
+            });
+            setIsPopUpVisible(false);
+        })
+
+    }
+
+    function NewFood() {
+        if(isPopUpVisible === true) {
+            return (
+                <PopUp>
+                    <img src={Exit} onClick={() => setIsPopUpVisible(false)}/>
+                    <PopUpBox onSubmit={addNewFood}>
+                        <input
+                        required 
+                        placeholder="Nome do Alimento"
+                        name="name"
+                        type="text"
+                        value={form.name}
+                        onChange={handleForm}
+                        ></input>
+                        <input
+                        required 
+                        placeholder="Quantidade(em g)"
+                        name="quantity"
+                        type="number"
+                        value={form.quantity}
+                        onChange={handleForm}
+                        ></input>
+                        <input
+                        required 
+                        placeholder="Calorias(em Kcal)"
+                        name="calories"
+                        type="number"
+                        value={form.calories}
+                        onChange={handleForm}
+                        ></input>
+                        <input
+                        required 
+                        placeholder="Qtd. de proteínas(em g)"
+                        name="protein"
+                        type="number"
+                        value={form.protein}
+                        onChange={handleForm}
+                        ></input>
+                        <input
+                        required 
+                        placeholder="Qtd. de carboidratos(em g)"
+                        name="carbohydrate"
+                        type="number"
+                        value={form.carbohydrate}
+                        onChange={handleForm}
+                        ></input>
+                        <input
+                        required 
+                        placeholder="Qtd. de gorduras(em g)"
+                        name="lipid"
+                        type="number"
+                        value={form.lipid}
+                        onChange={handleForm}
+                        ></input>
+                        <button>Adicionar Alimento</button>
+                    </PopUpBox>               
+                </PopUp>
+            )     
+        }
+    }
+
+    function loadPage() {
+        return (
+            <Container>
             <h1>Acompanha sua Alimentação</h1>
             <SearchContainer>
                 <h2>Busque por um alimento</h2>
@@ -59,8 +164,19 @@ export default function SearchFoods() {
                             </FoodBox>
                 ))}
             </SearchContainer>
-            <AddFood>Não encontrou o alimento? Adicione um novo aqui!</AddFood>
+            <AddFood onClick={() => setIsPopUpVisible(true)}>Não encontrou o alimento? Adicione um novo aqui!</AddFood>
         </Container>
+        )
+    }
+
+    const PageInfo = loadPage();
+    const PopUpInfo = NewFood();
+
+    return (
+        <>
+        {PageInfo}
+        {PopUpInfo}
+        </>
     )
 }
 
@@ -187,5 +303,68 @@ const AddFood = styled.div`
 
     :hover {
         color: #dfcd81;
+    }
+`
+
+const PopUp = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    img {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        cursor: pointer;
+    }
+`
+
+const PopUpBox = styled.form`
+    width: 650px;
+    height: 400px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    background: #FFFFFF;
+    border-radius: 12px;
+  
+    input {
+        width: 70%;
+        height: 45px;
+        background: #ffffff;
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 40px;
+        color: #9f9f9f;
+        padding-left: 10px;
+    }
+
+    button {
+        width: 70%;
+        height: 45px;
+        background: #1877f2;
+        border-radius: 6px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 40px;
+        color: #ffffff;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
     }
 `
