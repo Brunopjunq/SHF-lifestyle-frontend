@@ -36,7 +36,7 @@ export default function FoodsResume() {
             return (
                 <Container>
                     <h1>Acompanhe sua Alimentação</h1>
-                    <MealsBox />
+                    <MealsBox reload={reload} setReload={setReload}/>
                 </Container>
             )
         } else {

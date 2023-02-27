@@ -2,16 +2,20 @@ import { DebounceInput } from "react-debounce-input"
 import styled from "styled-components"
 import { GiMeal } from "react-icons/gi";
 import Add from "../../assets/images/AddGreen.png";
-import { getFoods, postFood } from "../../service/api";
+import { getFoods, postFood, postFoodByMeal } from "../../service/api";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Exit from "../../assets/images/Close.png";
 import Swal from "sweetalert2";
 
 export default function SearchFoods() {
     const [foods, setFoods] = useState([]);
     const { mealId } = useParams();
+    const newDate = new Date();
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+    const [isPopUpAddVisible, setIsPopUpAddVisible] = useState(false);
+    const [foodQtd, setFoodQtd] = useState('');
     const [form, setForm] = useState({
         name: null,
         quantity: null,
@@ -20,6 +24,10 @@ export default function SearchFoods() {
         carbohydrate: null,
         lipid: null,
     });
+    const mealsData = JSON.parse(localStorage.getItem("mealsData"));
+    const thisMeal = mealsData.filter((el) => el.id == mealId);
+    const [foodId, setFoodId] = useState('');
+    const navigate = useNavigate();
 
     function search(value) {
 
@@ -30,7 +38,6 @@ export default function SearchFoods() {
         getFoods(value)
         .then((res) => {
             setFoods(res.data);
-            console.log(foods);
         })
         .catch((error) => console.log(error))
     }
@@ -129,6 +136,57 @@ export default function SearchFoods() {
         }
     }
 
+    function addRequest(e) {
+        e.preventDefault();
+
+        const body = {
+            quantity: Number(foodQtd)
+        };
+
+        postFoodByMeal(body,foodId,today,mealId)
+        .then((res) => {
+            setIsPopUpAddVisible(false);
+            navigate('/home/foods');
+        })
+        .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Ops...",
+                text: `${error.response.status}`
+            });
+            console.log(error);
+            setFoodQtd('');
+            setFoodId('');
+            setIsPopUpVisible(false);
+        })
+
+    }
+
+    function addFoodByMeal() {
+        if(isPopUpAddVisible === true) {
+            return (
+                <PopUp>
+                    <img src={Exit} onClick={() => setIsPopUpAddVisible(false)}/>
+                    <PopUpBox onSubmit={addRequest}>
+                        <input
+                        required 
+                        placeholder="Quantidade(em g)"
+                        name="foodQtd"
+                        type="number"
+                        value={foodQtd}
+                        onChange={e => setFoodQtd(e.target.value)}
+                        ></input>
+                        <button>Adicionar Alimento em "{thisMeal[0].name}"</button>
+                    </PopUpBox>               
+                </PopUp>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
     function loadPage() {
         return (
             <Container>
@@ -158,7 +216,10 @@ export default function SearchFoods() {
                                         <a>Gord: {el.lipid}g</a>
                                     </NutriText>
                                 </FoodText>
-                                <EditIcon>
+                                <EditIcon onClick={() => {
+                                    setIsPopUpAddVisible(true)
+                                    setFoodId(el.id);
+                                }}>
                                     <img src={Add} />
                                 </EditIcon>
                             </FoodBox>
@@ -171,11 +232,13 @@ export default function SearchFoods() {
 
     const PageInfo = loadPage();
     const PopUpInfo = NewFood();
+    const PopUpAddInfo = addFoodByMeal();
 
     return (
         <>
         {PageInfo}
         {PopUpInfo}
+        {PopUpAddInfo}
         </>
     )
 }
@@ -212,6 +275,7 @@ const SearchContainer = styled.div`
         font-size: 25px;
         font-weight: bold;
         margin-bottom: 10px;
+        padding-top: 10px;
     }
 `
 
