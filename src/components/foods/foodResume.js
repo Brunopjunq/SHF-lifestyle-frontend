@@ -51,11 +51,14 @@ export default function FoodsResume() {
         if(meals.length > 0) {
             return (
                 <Container>
+                    <Header>
                     <h1>Acompanhe sua Alimentação</h1>
                     <CaloriesBox>
                         <p>Calorias Consumidas: {getTotalCaloriesByDay()} kcal</p>
                         <p>Calorias Restantes: {2200 - getTotalCaloriesByDay()} kcal</p>
                     </CaloriesBox>
+                    </Header>
+
                     <MealsBox reload={reload} setReload={setReload}/>
                 </Container>
             )
@@ -90,17 +93,23 @@ const Container = styled.div`
     min-height: 600px;
     padding-left: 30px;
     padding-right: 20px;
-    position: relative;
 
     h1 {
         color: #dfcd81;
     }
 `
 
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 35px;
+    margin-bottom: 35px;
+    box-sizing: border-box;
+    padding-right: 80px;
+`
+
 const CaloriesBox = styled.div`
-    position: absolute;
-    top: 0px;
-    right: 150px;
     color: white;
 `
 

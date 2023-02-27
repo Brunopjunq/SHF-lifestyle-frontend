@@ -1,9 +1,21 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+import { getMealsByDay } from "../../service/api";
 import WaterBox from "./WaterBox";
 import WeightBox from "./WeightBox";
 
 export default function UserSummary() {
     const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
+    const newDate = new Date();
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
+
+    useEffect(() => {
+        getMealsByDay(today)
+        .then((res) => {
+            localStorage.setItem("mealsData", JSON.stringify(res.data));
+        })
+        .catch((error) => console.log(error));
+    }, [])
 
     return (
         <>

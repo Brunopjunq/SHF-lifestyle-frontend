@@ -35,7 +35,6 @@ export default function FoodsBox(props, {reload, setReload}) {
                     setDeletedFood(props.name)
                     setDeletedFoodId(props.id)
                     setIsPopUpTrashVisible(true);
-                    console.log(deletedFoodId);
                     
                 }} />
             </EditIcon>
