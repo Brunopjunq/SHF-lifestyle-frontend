@@ -6,12 +6,21 @@ export default function MealsBox({reload, setReload}) {
     const mealsData = JSON.parse(localStorage.getItem("mealsData"));
     const navigate = useNavigate();
 
+    function getTotalCalories(array) {
+        let sum = 0;
+        array.map((el) => {
+            sum = sum + (el.foods.calories * (el.quantity/100))
+        })
+        return sum;
+    }
+
     return (
         <>
             {mealsData.map((el, index) => (
                 <Container key={index}>
                     <TitleBox>
                         <h2>{el.name}</h2>
+                        <a>{getTotalCalories(el.foods_meals)} kcal</a>
                     </TitleBox>
                     {el.foods_meals.map((el,index) => (
                         <FoodsBox
@@ -62,6 +71,14 @@ const TitleBox = styled.div`
         color: black;
         font-size: 30px;
         font-weight: bold;
+    }
+
+    a {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        font-weight: bold;
+        color: green;
     }
 `
 

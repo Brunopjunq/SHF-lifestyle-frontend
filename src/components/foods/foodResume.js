@@ -19,6 +19,22 @@ export default function FoodsResume() {
         .catch((error) => console.log(error))
     },[reload]);
 
+    function getTotalCaloriesByMeal(array) {
+        let sum = 0;
+        array.map((el) => {
+            sum = sum + (el.foods.calories * (el.quantity/100))
+        })
+        return sum;
+    }
+
+    function getTotalCaloriesByDay() {
+        return (getTotalCaloriesByMeal(meals[0].foods_meals)
+        + getTotalCaloriesByMeal(meals[1].foods_meals)
+        + getTotalCaloriesByMeal(meals[2].foods_meals)
+        + getTotalCaloriesByMeal(meals[3].foods_meals))
+    }
+
+
     function createMeals(name) {
         const body = {
             name: name,
@@ -36,6 +52,10 @@ export default function FoodsResume() {
             return (
                 <Container>
                     <h1>Acompanhe sua Alimentação</h1>
+                    <CaloriesBox>
+                        <p>Calorias Consumidas: {getTotalCaloriesByDay()} kcal</p>
+                        <p>Calorias Restantes: {2200 - getTotalCaloriesByDay()} kcal</p>
+                    </CaloriesBox>
                     <MealsBox reload={reload} setReload={setReload}/>
                 </Container>
             )
@@ -70,10 +90,18 @@ const Container = styled.div`
     min-height: 600px;
     padding-left: 30px;
     padding-right: 20px;
+    position: relative;
 
     h1 {
         color: #dfcd81;
     }
+`
+
+const CaloriesBox = styled.div`
+    position: absolute;
+    top: 0px;
+    right: 150px;
+    color: white;
 `
 
 const AddMeals = styled.div`
