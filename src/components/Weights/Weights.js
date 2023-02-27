@@ -25,7 +25,6 @@ export default function WeightControl() {
         .catch((error) => console.log(error))
     }, [])
 
-    console.log(weights)
     if(weights.length > 0) {
         weights.map(item => {
             let date = item.date.slice(0,10).split('-').reverse().join('/');
@@ -88,7 +87,6 @@ export default function WeightControl() {
         <>
         <Container>
             <h1>Acompanhe seu Peso</h1>
-            {/* <a>Em Breve!</a> */}
             <LineBox>
                 <Line options={options} data={data} />
             </LineBox>

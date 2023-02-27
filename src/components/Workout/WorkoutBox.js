@@ -13,7 +13,6 @@ export default function WorkoutBox() {
     const [form, setForm] = useState({
         name: "",
     });
-    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(false);
@@ -25,17 +24,24 @@ export default function WorkoutBox() {
             })
             .catch((error) => console.log(error));
     }, [isPopUpVisible]);
-    
-    let workoutSeries = workouts.length;
-    let workoutReps = workouts.reduce(getTotal, 0);
-    function getTotal(workoutReps, item) {
-        if(!item.workoutExercises.reps) {
-            return 0;
-        }
-        return workoutReps + item.workoutExercises.reps;
+
+    function getTotalSeries(array) {
+        let sum = 0
+        array.map((el) => {
+            sum = sum + el.series
+        });
+
+        return sum;
     }
 
+    function getTotalReps(array) {
+        let sum = 0
+        array.map((el) => {
+            sum = sum + el.reps
+        });
 
+        return sum;
+    }
 
     function LoadWorkouts() {
         if(workouts.length > 0) {
@@ -48,7 +54,7 @@ export default function WorkoutBox() {
                         <Container>
                             <h2>Treino de {work.name}</h2>
                             <a>Número de Exercícios: {work.workoutExercises.length}</a>
-                            <a>Carga de Treino: {workoutSeries} series/ {workoutReps} reps</a>
+                            <a>Carga de Treino: {getTotalSeries(work.workoutExercises)} series/ {getTotalReps(work.workoutExercises)} reps</a>
                         </Container>
                     </Link>
                 ))}
@@ -88,7 +94,6 @@ export default function WorkoutBox() {
         
         postWorkout(form)
         .then((res) => {
-            // navigate(`/home/workout/${res.data.id}`)
             setIsPopUpVisible(false);
         })
         .catch((error) => {

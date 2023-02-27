@@ -47,7 +47,7 @@ export default function WeightBox() {
             )
         } else {
             return (
-                <AddContainer>
+                <AddContainer onClick={() => setIsPopUpVisible(true)}>
                     Adicione e controle seu peso
                 </AddContainer>
             )
