@@ -10,7 +10,7 @@ export default function Header() {
 
     return (
             <HeaderContainer>
-                <BsPersonFill onClick={() => navigate("/")} />
+                <BsPersonFill onClick={() => navigate("/home/profile")} />
                 <img src={Logo} alt="Logo" onClick={() => navigate("/home/summary")}/>
                 <ImExit onClick={() => {
                     navigate("/");

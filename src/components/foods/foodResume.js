@@ -28,10 +28,15 @@ export default function FoodsResume() {
     }
 
     function getTotalCaloriesByDay() {
-        return (getTotalCaloriesByMeal(meals[0].foods_meals)
-        + getTotalCaloriesByMeal(meals[1].foods_meals)
-        + getTotalCaloriesByMeal(meals[2].foods_meals)
-        + getTotalCaloriesByMeal(meals[3].foods_meals))
+        console.log(Array.isArray(meals));
+        if(Array.isArray(meals) === false) {
+            return;
+        } else {
+            return (getTotalCaloriesByMeal(meals[0].foods_meals)
+            + getTotalCaloriesByMeal(meals[1].foods_meals)
+            + getTotalCaloriesByMeal(meals[2].foods_meals)
+            + getTotalCaloriesByMeal(meals[3].foods_meals))
+        }
     }
 
 
@@ -43,6 +48,7 @@ export default function FoodsResume() {
         postMeal(body,today)
         .then((res) => {
             setReload(reload + 1);
+            setMeals(res.data);
         })
         .catch((error) => console.log(error))
     }

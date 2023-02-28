@@ -94,7 +94,7 @@ export default function WeightBox() {
                 value={form.weight}
                 onChange={handleForm}
                 ></input>
-                <button>Adinionar Peso</button>
+                <button>Adicionar Peso</button>
             </PopUpBox>               
         </PopUp>
         ) }

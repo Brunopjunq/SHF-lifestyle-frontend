@@ -142,6 +142,11 @@ function postFoodByMeal(body,foodId,date,mealId) {
     return axios.post(postFoodByMeal, body, createHeaders());
 }
 
+function updateUser(body) {
+    const updatedUser = `${URL_BASE}/user`;
+    return axios.put(updatedUser,body, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
@@ -169,4 +174,5 @@ export {
     getFoods,
     postFood,
     postFoodByMeal,
+    updateUser
 };

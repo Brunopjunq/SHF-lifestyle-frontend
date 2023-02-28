@@ -39,6 +39,7 @@ export default function SignInPage() {
                     name: res.data.user.name,
                     token: res.data.token,
                     calories_goal: res.data.user.calories_goal,
+                    weight_goal: res.data.user.weight_goal,
                 })
             );
             setUserInfos(res.data);
