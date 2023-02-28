@@ -5,6 +5,17 @@ import FoodsBox from "./FoodsBox"
 export default function MealsBox({reload, setReload}) {
     const mealsData = JSON.parse(localStorage.getItem("mealsData"));
     const navigate = useNavigate();
+    const sortMeals = mealsData.sort(compare);
+
+    function compare( a, b ) {
+        if ( a.id < b.id ){
+          return -1;
+        }
+        if ( a.id > b.id ){
+          return 1;
+        }
+        return 0;
+      }
 
     function getTotalCalories(array) {
         let sum = 0;
@@ -16,7 +27,7 @@ export default function MealsBox({reload, setReload}) {
 
     return (
         <>
-            {mealsData.map((el, index) => (
+            {sortMeals.map((el, index) => (
                 <Container key={index}>
                     <TitleBox>
                         <h2>{el.name}</h2>

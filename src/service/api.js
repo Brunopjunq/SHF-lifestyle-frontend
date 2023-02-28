@@ -147,6 +147,11 @@ function updateUser(body) {
     return axios.put(updatedUser,body, createHeaders());
 }
 
+function getTotalCalories(date) {
+    const totalCalories = `${URL_BASE}/meals/${date}/calories`;
+    return axios.get(totalCalories, createHeaders());
+}
+
 export {
     postSignUp,
     postLogin,
@@ -174,5 +179,6 @@ export {
     getFoods,
     postFood,
     postFoodByMeal,
-    updateUser
+    updateUser,
+    getTotalCalories,
 };

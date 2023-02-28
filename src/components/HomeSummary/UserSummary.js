@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getMealsByDay } from "../../service/api";
+import { getMealsByDay, getTotalCalories } from "../../service/api";
 import WaterBox from "./WaterBox";
 import WeightBox from "./WeightBox";
+import FoodImage from "../../assets/images/foods.png"
 
 export default function UserSummary() {
     const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
     const newDate = new Date();
     const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
+    const [caloriesByDay, setCaloriesByDay] = useState('');
 
     useEffect(() => {
         getMealsByDay(today)
@@ -15,7 +17,33 @@ export default function UserSummary() {
             localStorage.setItem("mealsData", JSON.stringify(res.data));
         })
         .catch((error) => console.log(error));
+
+        getTotalCalories(today)
+        .then((res) => {
+            setCaloriesByDay(res.data)
+        })
+        .catch((error) => console.log(error));
     }, [])
+
+    function getDayCalories(day) {
+        if(caloriesByDay.length === 0) {
+            return 5000
+        } else {
+            const dayCal = caloriesByDay.filter((el) => el.date.includes(day))
+            console.log(dayCal);
+            let sum = 0
+            if(dayCal.length === 0) {
+                return 0
+            } else if(dayCal.length == 1) {
+                return dayCal[0].Total
+            } else {
+                dayCal.map((x) =>
+                sum = sum + x.Total)
+
+                return sum
+            };
+        }
+    }
 
     return (
         <>
@@ -23,7 +51,9 @@ export default function UserSummary() {
             <h1>Bem vindo, {userData.name}</h1>
             <Content>
                 <Main>
-                    Em Breve!
+                    <CaloriesBox>
+                        <a>Calorias: {getDayCalories(today)} kcal</a>
+                    </CaloriesBox>
                 </Main>
                 <SideBar>
                     <WaterBox />
@@ -65,4 +95,16 @@ const SideBar = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+`
+
+const CaloriesBox = styled.div`
+    width: 90%;
+    height:100px;
+    background-color: white;
+    border-radius: 20px;
+    background:url(${FoodImage});
+
+    a {
+        font-weight: bold;
+    }
 `

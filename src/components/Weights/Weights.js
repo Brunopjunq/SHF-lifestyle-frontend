@@ -16,6 +16,8 @@ export default function WeightControl() {
     let dates = [];
     let weightInfo = [];
     let weightGoal = [];
+    const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
+    const weight_goal = userData.weight_goal;
 
     useEffect(() => {
         getWeights()
@@ -29,7 +31,7 @@ export default function WeightControl() {
         weights.map(item => {
             let date = item.date.slice(0,10).split('-').reverse().join('/');
             dates.push(date);
-            weightGoal.push(72);
+            weightGoal.push(weight_goal);
         });
         weights.map(item => {
             let weight = item.weight;
