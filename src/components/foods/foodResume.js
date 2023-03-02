@@ -28,9 +28,8 @@ export default function FoodsResume() {
     }
 
     function getTotalCaloriesByDay() {
-        console.log(Array.isArray(meals));
-        if(Array.isArray(meals) === false) {
-            return;
+        if(meals.length < 2) {
+            return 0;
         } else {
             return (getTotalCaloriesByMeal(meals[0].foods_meals)
             + getTotalCaloriesByMeal(meals[1].foods_meals)
@@ -40,17 +39,18 @@ export default function FoodsResume() {
     }
 
 
-    function createMeals(name) {
-        const body = {
-            name: name,
+    function createMeals() {
+        const body1 = {
+            name: 'Café da Manhã',
         };
 
-        postMeal(body,today)
+        postMeal(body1,today)
         .then((res) => {
             setReload(reload + 1);
             setMeals(res.data);
         })
         .catch((error) => console.log(error))
+
     }
     
     function LoadMeals() {
@@ -64,8 +64,7 @@ export default function FoodsResume() {
                         <p>Calorias Restantes: {2200 - getTotalCaloriesByDay()} kcal</p>
                     </CaloriesBox>
                     </Header>
-
-                    <MealsBox reload={reload} setReload={setReload}/>
+                    <MealsBox />
                 </Container>
             )
         } else {
@@ -73,10 +72,7 @@ export default function FoodsResume() {
                 <Container>
                     <h1>Acompanhe sua Alimentação</h1>
                     <AddMeals onClick={() => {
-                        createMeals('Café da Manhã');
-                        createMeals('Almoço');
-                        createMeals('Jantar');
-                        createMeals('Lanche');
+                        createMeals();
                     }}>
                         Adicionar refeições do dia
                     </AddMeals>

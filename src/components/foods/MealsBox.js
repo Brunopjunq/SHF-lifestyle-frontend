@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import FoodsBox from "./FoodsBox"
 
-export default function MealsBox({reload, setReload}) {
+export default function MealsBox() {
     const mealsData = JSON.parse(localStorage.getItem("mealsData"));
     const navigate = useNavigate();
     const sortMeals = mealsData.sort(compare);
@@ -35,8 +35,6 @@ export default function MealsBox({reload, setReload}) {
                     </TitleBox>
                     {el.foods_meals.map((el,index) => (
                         <FoodsBox
-                        reload={reload}
-                        setReload={setReload} 
                         key={index}
                         id={el.id} 
                         name={el.foods.name} 

@@ -2,7 +2,7 @@ import { DebounceInput } from "react-debounce-input"
 import styled from "styled-components"
 import { GiMeal } from "react-icons/gi";
 import Add from "../../assets/images/AddGreen.png";
-import { getFoods, postFood, postFoodByMeal } from "../../service/api";
+import { getFoods, getMealsByDay, postFood, postFoodByMeal } from "../../service/api";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Exit from "../../assets/images/Close.png";
@@ -73,6 +73,11 @@ export default function SearchFoods() {
             setIsPopUpVisible(false);
         })
 
+        getMealsByDay(today)
+        .then((res) => {
+            localStorage.setItem("mealsData", JSON.stringify(res.data));
+        })
+        .catch((error) => console.log(error))
     }
 
     function NewFood() {

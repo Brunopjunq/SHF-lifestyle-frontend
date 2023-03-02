@@ -52,7 +52,8 @@ export default function UserSummary() {
             <Content>
                 <Main>
                     <CaloriesBox>
-                        <a>Calorias: {getDayCalories(today)} kcal</a>
+                        <a>Calorias consumidas hoje: <span>{getDayCalories(today)}</span> kcal | 
+                        Meta diária: <span>{userData.calories_goal}</span> kcal </a>
                     </CaloriesBox>
                 </Main>
                 <SideBar>
@@ -103,8 +104,15 @@ const CaloriesBox = styled.div`
     background-color: white;
     border-radius: 20px;
     background:url(${FoodImage});
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     a {
         font-weight: bold;
+    }
+
+    span {
+        font-size: 40px;
     }
 `

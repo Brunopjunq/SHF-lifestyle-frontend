@@ -6,7 +6,7 @@ import { useState } from "react";
 import { deleteFoodByMeal } from "../../service/api";
 import Exit from "../../assets/images/Close.png";
 
-export default function FoodsBox(props, {reload, setReload}) {
+export default function FoodsBox(props) {
     const [isPopUpTrashVisible, setIsPopUpTrashVisible] = useState(false);
     const [deletedFood, setDeletedFood] = useState("");
     const [deletedFoodId, setDeletedFoodId] = useState("");
