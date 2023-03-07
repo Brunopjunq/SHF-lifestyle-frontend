@@ -16,6 +16,7 @@ import UserSummary from "./components/HomeSummary/UserSummary";
 import WeightControl from "./components/Weights/Weights";
 import SearchFoods from "./components/foods/SearchFoods";
 import UserProfile from "./components/UserProfile/userProfile";
+import WaterHistoric from "./components/Water/WaterHistoric";
 
 export default function App() {
 
@@ -44,6 +45,7 @@ export default function App() {
                             <Route path="summary" element={<UserSummary />} />
                             <Route path="profile" element={<UserProfile />} />
                             <Route path="weight" element={<WeightControl />} />
+                            <Route path="water" element={<WaterHistoric />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

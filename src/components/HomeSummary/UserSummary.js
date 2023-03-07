@@ -6,6 +6,7 @@ import WeightBox from "./WeightBox";
 import FoodImage from "../../assets/images/foods.png";
 import AerobicImage from "../../assets/images/aerobics.png";
 import WaterImage from "../../assets/images/waterGlass.png";
+import { useNavigate } from "react-router-dom";
 
 export default function UserSummary() {
     const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
@@ -15,6 +16,7 @@ export default function UserSummary() {
     const [aerobics, setAerobics] = useState('');
     const waterCount = JSON.parse(localStorage.getItem("WaterData"));
     const [waterData, setWaterData] = useState(waterCount);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getMealsByDay(today)
@@ -100,7 +102,7 @@ export default function UserSummary() {
                                     <a>Qtd de copos: {el.quantity}</a>
                                 </WaterInfo>
                             ) )}
-                            <WaterButton>
+                            <WaterButton onClick={() => navigate('/home/water')}>
                                 <a>Ver histórico completo</a>
                             </WaterButton>
                         </WaterCard>
