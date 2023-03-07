@@ -50,7 +50,6 @@ export default function AerobicsBox() {
 
         postAerobic(body, today)
         .then((res) => {
-            // window.location.reload();
             setIsPopUpVisible(false);
             setReload(reload + 1);
         })

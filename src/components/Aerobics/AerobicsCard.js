@@ -25,7 +25,6 @@ export default function AerobicsCard({reload, setReload}) {
         .then((res) => {
             setAerobics(res.data);
             localStorage.setItem("aerobicsData", JSON.stringify(res.data));
-            console.log("to renderizando");
         })
         .catch((error) => console.log(error))
     }, [isPopUpVisible, isPopUpTrashVisible, reload]);

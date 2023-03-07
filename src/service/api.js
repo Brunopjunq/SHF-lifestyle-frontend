@@ -87,6 +87,11 @@ function postWaterCount(body,date) {
     return axios.post(postWaterCount, body, createHeaders());
 };
 
+function getWaterData() {
+    const getWaterData = `${URL_BASE}/water`;
+    return axios.get(getWaterData, createHeaders());
+}
+
 function getWaterByDay(date) {
     const getWaterbyDay = `${URL_BASE}/water/${date}`
     return axios.get(getWaterbyDay, createHeaders());
@@ -171,6 +176,7 @@ export {
     increaseWaterCount,
     decreaseWaterCount,
     getWaterByDay,
+    getWaterData,
     getWeights,
     postWeight,
     getMealsByDay,

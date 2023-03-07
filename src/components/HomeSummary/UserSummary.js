@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getAerobicsbyDay, getMealsByDay, getTotalCalories } from "../../service/api";
+import { getAerobicsbyDay, getMealsByDay, getTotalCalories, getWaterData } from "../../service/api";
 import WaterBox from "./WaterBox";
 import WeightBox from "./WeightBox";
 import FoodImage from "../../assets/images/foods.png";
 import AerobicImage from "../../assets/images/aerobics.png";
+import WaterImage from "../../assets/images/waterGlass.png";
 
 export default function UserSummary() {
     const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
@@ -12,6 +13,8 @@ export default function UserSummary() {
     const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
     const [caloriesByDay, setCaloriesByDay] = useState('');
     const [aerobics, setAerobics] = useState('');
+    const waterCount = JSON.parse(localStorage.getItem("WaterData"));
+    const [waterData, setWaterData] = useState(waterCount);
 
     useEffect(() => {
         getMealsByDay(today)
@@ -30,6 +33,13 @@ export default function UserSummary() {
         .then((res) => {
             localStorage.setItem("aerobicsData", JSON.stringify(res.data));
             setAerobics(res.data);
+        })
+        .catch((error) => console.log(error));
+
+        getWaterData()
+        .then((res) => {
+            localStorage.setItem("WaterData", JSON.stringify(res.data));
+            setWaterData(res.data.slice(1,7));
         })
         .catch((error) => console.log(error));
     }, [])
@@ -81,11 +91,21 @@ export default function UserSummary() {
                     </AerobicsBox>
                     <BottomBox>
                         <WaterCard>
-
+                            <WaterText>
+                                <p>Histórico de água</p>
+                            </WaterText>
+                            {waterData?.map((el) => (
+                                <WaterInfo>
+                                    <a>{el.date.split('-').reverse().join('/')}</a>
+                                    <a>Qtd de copos: {el.quantity}</a>
+                                </WaterInfo>
+                            ) )}
+                            <WaterButton>
+                                <a>Ver histórico completo</a>
+                            </WaterButton>
                         </WaterCard>
-                        <WaterCard>
-
-                        </WaterCard>
+                        {/* <WaterCard>
+                        </WaterCard> */}
                     </BottomBox>
                 </Main>
                 <SideBar>
@@ -181,6 +201,57 @@ const BottomBox = styled.div`
 const WaterCard = styled.div`
     width: 48%;
     height: 250px;
+    background:url(${WaterImage});
     background-color: white;
+    background-size: contain;
     border-radius: 20px;
+`
+
+const WaterText = styled.div`
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid black;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+`
+
+const WaterInfo = styled.div`
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid black;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    a {
+        color: black;
+        padding: 15px;
+        font-weight: bold;
+    }
+`
+
+const WaterButton = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+    a {
+        color: black;
+        border: 1px solid black;
+        border-radius: 10px;
+        font-weight: bold;
+        box-sizing: border-box;
+        padding: 3px;
+
+        :hover {
+            background-color: lightgray;
+            cursor: pointer;
+        }
+    }
 `
