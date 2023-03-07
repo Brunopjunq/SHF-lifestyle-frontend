@@ -6,7 +6,7 @@ import Edit from "../../assets/images/Edit.png";
 import Swal from "sweetalert2";
 import Exit from "../../assets/images/Close.png";
 
-export default function AerobicsCard() {
+export default function AerobicsCard({reload, setReload}) {
     const [aerobics, setAerobics] = useState([]);
     const [isPopUpVisible, setIsPopUpVisible] = useState(false);
     const [isPopUpTrashVisible, setIsPopUpTrashVisible] = useState(false);
@@ -25,9 +25,10 @@ export default function AerobicsCard() {
         .then((res) => {
             setAerobics(res.data);
             localStorage.setItem("aerobicsData", JSON.stringify(res.data));
+            console.log("to renderizando");
         })
         .catch((error) => console.log(error))
-    }, [isPopUpVisible, isPopUpTrashVisible]);
+    }, [isPopUpVisible, isPopUpTrashVisible, reload]);
 
     function LoadAerobics() {
         return (

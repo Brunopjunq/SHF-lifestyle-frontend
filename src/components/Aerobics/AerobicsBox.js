@@ -14,7 +14,8 @@ export default function AerobicsBox() {
         calories: null,
     });
     const newDate = new Date();
-    const today = newDate.toISOString().slice(0,10);
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
+    const [reload, setReload] = useState(0);
 
 
     function LoadPage() {
@@ -23,7 +24,10 @@ export default function AerobicsBox() {
             <AddCard onClick={() => setIsPopUpVisible(true)}>
                 <img src={Add} />
             </AddCard>
-            <AerobicsCard />
+            <AerobicsCard 
+            reload={reload}
+            setReload={setReload}
+            />
         </Container>
         )
     }
@@ -46,8 +50,9 @@ export default function AerobicsBox() {
 
         postAerobic(body, today)
         .then((res) => {
-            window.location.reload();
+            // window.location.reload();
             setIsPopUpVisible(false);
+            setReload(reload + 1);
         })
         .catch((error) => {
             Swal.fire({

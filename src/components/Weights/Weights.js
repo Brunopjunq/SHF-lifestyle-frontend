@@ -59,7 +59,7 @@ export default function WeightControl() {
           },
           title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: 'Histórico de Pesos',
           },
         },
       };
