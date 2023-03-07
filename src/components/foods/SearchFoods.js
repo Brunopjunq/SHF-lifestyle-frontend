@@ -72,12 +72,6 @@ export default function SearchFoods() {
             });
             setIsPopUpVisible(false);
         })
-
-        getMealsByDay(today)
-        .then((res) => {
-            localStorage.setItem("mealsData", JSON.stringify(res.data));
-        })
-        .catch((error) => console.log(error))
     }
 
     function NewFood() {
@@ -151,7 +145,13 @@ export default function SearchFoods() {
         postFoodByMeal(body,foodId,today,mealId)
         .then((res) => {
             setIsPopUpAddVisible(false);
-            navigate('/home/foods');
+
+            getMealsByDay(today)
+            .then((res) => {
+                localStorage.setItem("mealsData", JSON.stringify(res.data));
+                navigate('/home/foods');
+            })
+            .catch((error) => console.log(error))
         })
         .catch((error) => {
             Swal.fire({

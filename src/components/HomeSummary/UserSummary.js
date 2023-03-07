@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getMealsByDay, getTotalCalories } from "../../service/api";
+import { getAerobicsbyDay, getMealsByDay, getTotalCalories } from "../../service/api";
 import WaterBox from "./WaterBox";
 import WeightBox from "./WeightBox";
-import FoodImage from "../../assets/images/foods.png"
+import FoodImage from "../../assets/images/foods.png";
+import AerobicImage from "../../assets/images/aerobics.png";
 
 export default function UserSummary() {
     const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
     const newDate = new Date();
     const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
     const [caloriesByDay, setCaloriesByDay] = useState('');
+    const [aerobics, setAerobics] = useState('');
 
     useEffect(() => {
         getMealsByDay(today)
@@ -23,14 +25,20 @@ export default function UserSummary() {
             setCaloriesByDay(res.data)
         })
         .catch((error) => console.log(error));
+
+        getAerobicsbyDay(today)
+        .then((res) => {
+            localStorage.setItem("aerobicsData", JSON.stringify(res.data));
+            setAerobics(res.data);
+        })
+        .catch((error) => console.log(error));
     }, [])
 
     function getDayCalories(day) {
         if(caloriesByDay.length === 0) {
-            return 5000
+            return 0;
         } else {
             const dayCal = caloriesByDay.filter((el) => el.date.includes(day))
-            console.log(dayCal);
             let sum = 0
             if(dayCal.length === 0) {
                 return 0
@@ -45,6 +53,18 @@ export default function UserSummary() {
         }
     }
 
+    function getAerobicsCalories() {
+        if(aerobics.length == 0) {
+            return 0;
+        } else {
+            let sum = 0;
+            aerobics.map((el) =>
+            sum = sum + el.calories)
+
+            return sum
+        };
+    };
+
     return (
         <>
         <Container>
@@ -55,6 +75,18 @@ export default function UserSummary() {
                         <a>Calorias consumidas hoje: <span>{getDayCalories(today)}</span> kcal | 
                         Meta diária: <span>{userData.calories_goal}</span> kcal </a>
                     </CaloriesBox>
+                    <AerobicsBox>
+                        <a>N° de exercícios hoje: <span>{aerobics.length}</span> | 
+                        Calorias gastas: <span>{getAerobicsCalories()}</span> kcal </a>
+                    </AerobicsBox>
+                    <BottomBox>
+                        <WaterCard>
+
+                        </WaterCard>
+                        <WaterCard>
+
+                        </WaterCard>
+                    </BottomBox>
                 </Main>
                 <SideBar>
                     <WaterBox />
@@ -107,6 +139,7 @@ const CaloriesBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
 
     a {
         font-weight: bold;
@@ -115,4 +148,39 @@ const CaloriesBox = styled.div`
     span {
         font-size: 40px;
     }
+`
+
+const AerobicsBox = styled.div`
+    width: 90%;
+    height:100px;
+    background-color: white;
+    border-radius: 20px;
+    background:url(${AerobicImage});
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    a {
+        font-weight: bold;
+    }
+
+    span {
+        font-size: 40px;
+    }
+`
+
+const BottomBox = styled.div`
+    width: 90%;
+    height: 250px;
+    display: flex;
+    justify-content: space-between;
+`
+
+const WaterCard = styled.div`
+    width: 48%;
+    height: 250px;
+    background-color: white;
+    border-radius: 20px;
 `

@@ -3,14 +3,18 @@ import Trash from "../../assets/images/redTrash.png";
 import { GiMeal } from "react-icons/gi";
 import { BiEdit } from "react-icons/bi";
 import { useState } from "react";
-import { deleteFoodByMeal } from "../../service/api";
+import { deleteFoodByMeal, getMealsByDay } from "../../service/api";
 import Exit from "../../assets/images/Close.png";
+import { useNavigate } from "react-router-dom";
 
 export default function FoodsBox(props) {
     const [isPopUpTrashVisible, setIsPopUpTrashVisible] = useState(false);
     const [deletedFood, setDeletedFood] = useState("");
     const [deletedFoodId, setDeletedFoodId] = useState("");
-    
+    const newDate = new Date();
+    const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
+    const navigate = useNavigate();
+
     function LoadFoods() {
         return (
             <Container>
@@ -48,6 +52,14 @@ export default function FoodsBox(props) {
         deleteFoodByMeal(deletedFoodId)
         .then((res) => {
             setIsPopUpTrashVisible(false);
+
+            getMealsByDay(today)
+            .then((res) => {
+                localStorage.setItem("mealsData", JSON.stringify(res.data));
+                navigate('/home/foods');
+            })
+            .catch((error) => console.log(error))
+
         })
         .catch((error) => console.log(error))
     }

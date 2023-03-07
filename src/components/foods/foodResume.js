@@ -15,6 +15,7 @@ export default function FoodsResume() {
             setMeals(res.data);
             localStorage.setItem("mealsData", JSON.stringify(res.data));
             setReload(0);
+            console.log("Renderizou")
         })
         .catch((error) => console.log(error))
     },[reload]);
