@@ -11,6 +11,7 @@ import {   Chart as ChartJS,
 
 export default function WaterHistoric() {
     const waterData = JSON.parse(localStorage.getItem("WaterData"));
+    const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
     let dates = [];
     let waterInfo = [];
     let waterGoal = [];
@@ -19,7 +20,7 @@ export default function WaterHistoric() {
         waterData.map(item => {
             let date = item.date.slice(0,10).split('-').reverse().join('/');
             dates.push(date);
-            waterGoal.push(10);
+            waterGoal.push(userData.water_goal);
         });
         waterData.map(item => {
             let water = item.quantity;

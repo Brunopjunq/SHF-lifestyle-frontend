@@ -9,6 +9,7 @@ export default function UserProfile() {
     const [name,setName] = useState("");
     const [calories, setCalories] = useState("");
     const [weight, setWeight] = useState("");
+    const [water, setWater] = useState("");
     const [isPopUpVisible, setIsPopUpVisible] = useState("");
 
 
@@ -29,6 +30,10 @@ export default function UserProfile() {
                     <p>Meta de Peso: {userData.weight_goal} Kg</p>
                     <UpdateButton onClick={() => setIsPopUpVisible("weight")}>Atualizar Meta</UpdateButton>
                 </TextBox>
+                <TextBox>
+                    <p>Meta de Consumo de água diário: {userData.water_goal} Copos</p>
+                    <UpdateButton onClick={() => setIsPopUpVisible("water")}>Atualizar Meta</UpdateButton>
+                </TextBox>
             </Container>
             </>
         )
@@ -48,6 +53,8 @@ export default function UserProfile() {
                 name: name,
                 token: userData.token,
                 calories_goal: userData.calories_goal,
+                weight_goal: userData.weight_goal,
+                water_goal: userData.water_goal,
             }));
             setName("");
             setIsPopUpVisible("");
@@ -77,6 +84,8 @@ export default function UserProfile() {
                 name: userData.name,
                 token: userData.token,
                 calories_goal: calories,
+                weight_goal: userData.weight_goal,
+                water_goal: userData.water_goal,
             }));
             setCalories("");
             setIsPopUpVisible("");
@@ -106,7 +115,8 @@ export default function UserProfile() {
                 name: userData.name,
                 token: userData.token,
                 calories_goal: userData.calories_goal,
-                weight_goal: weight
+                weight_goal: weight,
+                water_goal: userData.water_goal
             }));
             setWeight("");
             setIsPopUpVisible("");
@@ -118,6 +128,37 @@ export default function UserProfile() {
                 text: `${error.response}`
             });
             setWeight("");
+            setIsPopUpVisible("");
+        })
+    }
+
+    function updateWaterGoal(e) {
+        e.preventDefault();
+
+        const body = {
+            calories_goal: Number(water)
+        }
+
+        updateUser(body)
+        .then((res) => {
+            localStorage.setItem("shf_lifestyle", JSON.stringify({
+                id: userData.id,
+                name: userData.name,
+                token: userData.token,
+                calories_goal: userData.calories_goal,
+                weight_goal: userData.weight_goal,
+                water_goal: water,
+            }));
+            setWater("");
+            setIsPopUpVisible("");
+        })
+        .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Ops...",
+                text: `${error.response}`
+            });
+            setWater("");
             setIsPopUpVisible("");
         })
     }
@@ -173,9 +214,26 @@ export default function UserProfile() {
                 </PopUpBox>               
             </PopUp>
             ) 
+        } else if(isPopUpVisible === "water") {
+            return (
+                <PopUp>
+                    <img src={Exit} onClick={() => setIsPopUpVisible("")}/>
+                    <PopUpBox onSubmit={updateWaterGoal}>
+                        <input
+                        required 
+                        placeholder="Meta de consumo de água"
+                        name="water_goal"
+                        type="number"
+                        value={water}
+                        onChange={e => setWater(e.target.value)}
+                        ></input>
+                        <button>Atualizar meta de consumo de água</button>
+                    </PopUpBox>               
+                </PopUp>
+                ) 
         } else {
             <></>
-        }
+        }  
     }
 
 

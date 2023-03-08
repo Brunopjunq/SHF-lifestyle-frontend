@@ -8,6 +8,8 @@ export default function FoodsResume() {
     const today = newDate.toLocaleString().slice(0,10).split('/').reverse().join('-');
     const [meals, setMeals] = useState("");
     const [reload, setReload] = useState(0);
+    const userData = JSON.parse(localStorage.getItem("shf_lifestyle"));
+    const caloriesGoal = userData.calories_goal;
 
     useEffect(() => {
         getMealsByDay(today)
@@ -15,7 +17,6 @@ export default function FoodsResume() {
             setMeals(res.data);
             localStorage.setItem("mealsData", JSON.stringify(res.data));
             setReload(0);
-            console.log("Renderizou")
         })
         .catch((error) => console.log(error))
     },[reload]);
@@ -62,7 +63,7 @@ export default function FoodsResume() {
                     <h1>Acompanhe sua Alimentação</h1>
                     <CaloriesBox>
                         <p>Calorias Consumidas: {getTotalCaloriesByDay()} kcal</p>
-                        <p>Calorias Restantes: {2200 - getTotalCaloriesByDay()} kcal</p>
+                        <p>Calorias Restantes: {caloriesGoal - getTotalCaloriesByDay()} kcal</p>
                     </CaloriesBox>
                     </Header>
                     <MealsBox />
